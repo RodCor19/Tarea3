@@ -1,13 +1,7 @@
 package servlet;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import java.io.IOException;
-import java.io.PrintWriter;
+//import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -31,32 +25,23 @@ import webservices.WSClientesService;
 @MultipartConfig
 public class ServletArtistas extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-                response.setContentType("text/html;charset=UTF-8");
-                HttpSession sesion = request.getSession();
-                WSArtistasService wsarts = new WSArtistasService(/*url*/);
-                WSArtistas wsart = wsarts.getWSArtistasPort();
-                WSClientesService wsclis = new WSClientesService();
-                WSClientes wscli = wsclis.getWSClientesPort();
+        throws ServletException, IOException {
+            response.setContentType("text/html;charset=UTF-8");
+            HttpSession sesion = request.getSession();
+            WSArtistasService wsarts = new WSArtistasService(/*url*/);
+            WSArtistas wsart = wsarts.getWSArtistasPort();
+            WSClientesService wsclis = new WSClientesService();
+            WSClientes wscli = wsclis.getWSClientesPort();
 
-                if (request.getParameter("Join") != null) {
-                    String nickname = request.getParameter("Join");
-                    String contrasenia = request.getParameter("Contrasenia");
-                    DataUsuarios data = wsart.verificarLoginArtista(nickname, contrasenia);
-                    DtUsuario dt = null;
-                    if (!data.getUsuarios().isEmpty()) {
-                        dt = data.getUsuarios().get(0);
-                    }
+            if (request.getParameter("Join") != null) {
+                String nickname = request.getParameter("Join");
+                String contrasenia = request.getParameter("Contrasenia");
+                DataUsuarios data = wsart.verificarLoginArtista(nickname, contrasenia);
+                DtUsuario dt = null;
+                if (!data.getUsuarios().isEmpty()) {
+                    dt = data.getUsuarios().get(0);
+                }
 
                 if (dt != null) {
                     sesion.setAttribute("Usuario", dt);
@@ -78,7 +63,6 @@ public class ServletArtistas extends HttpServlet {
                     response.sendRedirect("/EspotifyMovil/Vistas/IniciarSesion.jsp");
                 }
             }
-
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -118,5 +102,4 @@ public class ServletArtistas extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }
