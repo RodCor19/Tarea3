@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://localhost:8088/wsartistas?WSDL" uri="xml-resources/web-service-references/wsartistas/wsdl/localhost_8088/wsartistas.wsdl"/>
+    <system systemId="http://localhost:8088/wsartistas?xsd=1" uri="xml-resources/web-service-references/wsartistas/wsdl/localhost_8088/wsartistas.xsd_1.xsd"/>
+</catalog>
