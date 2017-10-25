@@ -53,7 +53,7 @@ public class ServletArtistas extends HttpServlet {
                         wscli.actualizarVigenciaSuscripciones(dt.getNickname());
                     }
 
-                    response.sendRedirect("ServletArtistas?Inicio=true");
+                    response.sendRedirect("/EspotifyMovil/Vistas/index.jsp");
                 } else {
                     if (!(wscli.verificarDatosCli(nickname, nickname) && wsart.verificarDatosArt(nickname, nickname))) {
                         sesion.setAttribute("error", "Contraseña incorrecta");
