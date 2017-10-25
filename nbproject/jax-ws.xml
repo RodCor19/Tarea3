@@ -2,47 +2,11 @@
 <jax-ws xmlns="http://www.netbeans.org/ns/jax-ws/1">
   <services/>
   <clients>
-    <client name="wsartistas">
-<<<<<<< HEAD
-<<<<<<< HEAD
-      <wsdl-url>http://localhost:8088/wsartistas?wsdl</wsdl-url>
-      <local-wsdl-file>localhost_8088/wsartistas.wsdl</local-wsdl-file>
-      <package-name>webservices</package-name>
-      <catalog-file>catalog.xml</catalog-file>
-      <use-dispatch>true</use-dispatch>
-      <wsimport-options>
-        <wsimport-option>
-          <wsimport-option-name>extension</wsimport-option-name>
-          <wsimport-option-value>true</wsimport-option-value>
-        </wsimport-option>
-        <wsimport-option>
-          <wsimport-option-name>verbose</wsimport-option-name>
-          <wsimport-option-value>true</wsimport-option-value>
-        </wsimport-option>
-        <wsimport-option>
-          <wsimport-option-name>fork</wsimport-option-name>
-          <wsimport-option-value>false</wsimport-option-value>
-        </wsimport-option>
-        <wsimport-option>
-          <wsimport-option-name>wsdlLocation</wsimport-option-name>
-          <wsimport-option-value>http://localhost:8088/wsartistas?wsdl</wsimport-option-value>
-        </wsimport-option>
-        <wsimport-option>
-          <wsimport-option-name>xnocompile</wsimport-option-name>
-          <wsimport-option-value>true</wsimport-option-value>
-        </wsimport-option>
-        <wsimport-option>
-          <wsimport-option-name>xendorsed</wsimport-option-name>
-          <wsimport-option-value>true</wsimport-option-value>
-        </wsimport-option>
-      </wsimport-options>
-    </client>
     <client name="wsclientes">
       <wsdl-url>http://localhost:8087/wsclientes?wsdl</wsdl-url>
       <local-wsdl-file>localhost_8087/wsclientes.wsdl</local-wsdl-file>
       <package-name>webservices</package-name>
       <catalog-file>catalog.xml</catalog-file>
-      <use-dispatch>true</use-dispatch>
       <wsimport-options>
         <wsimport-option>
           <wsimport-option-name>extension</wsimport-option-name>
@@ -67,12 +31,14 @@
         <wsimport-option>
           <wsimport-option-name>xendorsed</wsimport-option-name>
           <wsimport-option-value>true</wsimport-option-value>
-=======
-      <wsdl-url>http://localhost:8088/wsartistas?WSDL</wsdl-url>
+        </wsimport-option>
+      </wsimport-options>
+    </client>
+    <client name="wsartistas">
+      <wsdl-url>http://localhost:8088/wsartistas?wsdl</wsdl-url>
       <local-wsdl-file>localhost_8088/wsartistas.wsdl</local-wsdl-file>
-      <package-name forceReplace="true">webservices</package-name>
+      <package-name>webservices</package-name>
       <catalog-file>catalog.xml</catalog-file>
-      <use-dispatch>true</use-dispatch>
       <wsimport-options>
         <wsimport-option>
           <wsimport-option-name>extension</wsimport-option-name>
@@ -88,7 +54,7 @@
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>wsdlLocation</wsimport-option-name>
-          <wsimport-option-value>http://localhost:8088/wsartistas?WSDL</wsimport-option-value>
+          <wsimport-option-value>http://localhost:8088/wsartistas?wsdl</wsimport-option-value>
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>xnocompile</wsimport-option-name>
@@ -97,46 +63,6 @@
         <wsimport-option>
           <wsimport-option-name>xendorsed</wsimport-option-name>
           <wsimport-option-value>true</wsimport-option-value>
-        </wsimport-option>
-        <wsimport-option>
-          <wsimport-option-name>package</wsimport-option-name>
-          <wsimport-option-value>webservices</wsimport-option-value>
->>>>>>> origin/Desarrollo
-=======
-      <wsdl-url>http://localhost:8088/wsartistas?WSDL</wsdl-url>
-      <local-wsdl-file>localhost_8088/wsartistas.wsdl</local-wsdl-file>
-      <package-name forceReplace="true">webservices</package-name>
-      <catalog-file>catalog.xml</catalog-file>
-      <use-dispatch>true</use-dispatch>
-      <wsimport-options>
-        <wsimport-option>
-          <wsimport-option-name>extension</wsimport-option-name>
-          <wsimport-option-value>true</wsimport-option-value>
-        </wsimport-option>
-        <wsimport-option>
-          <wsimport-option-name>verbose</wsimport-option-name>
-          <wsimport-option-value>true</wsimport-option-value>
-        </wsimport-option>
-        <wsimport-option>
-          <wsimport-option-name>fork</wsimport-option-name>
-          <wsimport-option-value>false</wsimport-option-value>
-        </wsimport-option>
-        <wsimport-option>
-          <wsimport-option-name>wsdlLocation</wsimport-option-name>
-          <wsimport-option-value>http://localhost:8088/wsartistas?WSDL</wsimport-option-value>
-        </wsimport-option>
-        <wsimport-option>
-          <wsimport-option-name>xnocompile</wsimport-option-name>
-          <wsimport-option-value>true</wsimport-option-value>
-        </wsimport-option>
-        <wsimport-option>
-          <wsimport-option-name>xendorsed</wsimport-option-name>
-          <wsimport-option-value>true</wsimport-option-value>
-        </wsimport-option>
-        <wsimport-option>
-          <wsimport-option-name>package</wsimport-option-name>
-          <wsimport-option-value>webservices</wsimport-option-value>
->>>>>>> origin/Desarrollo
         </wsimport-option>
       </wsimport-options>
     </client>
