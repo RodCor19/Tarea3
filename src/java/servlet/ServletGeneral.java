@@ -1,9 +1,13 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package servlet;
 
 import java.io.IOException;
-//import java.io.PrintWriter;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,10 +25,18 @@ import webservices.WSClientesService;
  *
  * @author stephiRM
  */
-@WebServlet(name = "ServletArtistas", urlPatterns = {"/ServletArtistas"})
-@MultipartConfig
-public class ServletArtistas extends HttpServlet {
+@WebServlet(name = "ServletGeneral", urlPatterns = {"/ServletGeneral"})
+public class ServletGeneral extends HttpServlet {
 
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
             response.setContentType("text/html;charset=UTF-8");
@@ -43,27 +55,33 @@ public class ServletArtistas extends HttpServlet {
                     dt = data.getUsuarios().get(0);
                 }
 
-                if (dt != null) {
-                    sesion.setAttribute("Usuario", dt);
-                    sesion.removeAttribute("error");
-                    sesion.setAttribute("Mensaje", "Bienvenido/a " + dt.getNombre() + " " + dt.getApellido());
+                if(dt instanceof DtCliente){
+                    if (dt != null) {
+                        sesion.setAttribute("Usuario", dt);
+                        sesion.removeAttribute("error");
+                        sesion.setAttribute("Mensaje", "Bienvenido/a " + dt.getNombre() + " " + dt.getApellido());
 
-                    if (dt instanceof DtCliente) {
-                        //Verificar y actualizar si las suscripciones del cliente que estaban vigentes se vencieron
-                        wscli.actualizarVigenciaSuscripciones(dt.getNickname());
-                    }
+                        if (dt instanceof DtCliente) {
+                            //Verificar y actualizar si las suscripciones del cliente que estaban vigentes se vencieron
+                            wscli.actualizarVigenciaSuscripciones(dt.getNickname());
+                        }
 
-                    response.sendRedirect("/EspotifyMovil/Vistas/index.jsp");
-                } else {
-                    if (!(wscli.verificarDatosCli(nickname, nickname) && wsart.verificarDatosArt(nickname, nickname))) {
-                        sesion.setAttribute("error", "Contraseña incorrecta");
+                        response.sendRedirect("/EspotifyMovil/Vistas/index.jsp");
                     } else {
-                        sesion.setAttribute("error", "Usuario y contraseña incorrectos");
+                        if (!(wscli.verificarDatosCli(nickname, nickname) && wsart.verificarDatosArt(nickname, nickname))) {
+                            sesion.setAttribute("error", "Contraseña incorrecta");
+                        } else {
+                            sesion.setAttribute("error", "Usuario y contraseña incorrectos");
+                        }
+                        response.sendRedirect("/EspotifyMovil/Vistas/IniciarSesion.jsp");
                     }
-                    response.sendRedirect("/EspotifyMovil/Vistas/IniciarSesion.jsp");
+                }else{
+                    sesion.setAttribute("error", "Usuario y contraseña incorrectos");
+                    response.sendRedirect("/EspotifyMovil/Vistas/IniciarSesion.jsp");  
                 }
             }
     }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -102,4 +120,5 @@ public class ServletArtistas extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }

@@ -25,7 +25,7 @@
                     <div class="col-sm-8 text-left">
                         <center><h1>Iniciar sesión</h1></center>
                         <ul class="list-group">
-                            <form id="iniciar" action="../ServletArtistas" method="post">
+                            <form id="iniciar" action="../ServletGeneral" method="post">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                                     <input type="text" class="form-control" name="Join" placeholder="Nickname o correo"><br>
@@ -55,5 +55,6 @@
         <script src="/EspotifyWeb/Javascript/jquery.min.js"></script>
         <script src="/EspotifyWeb/Javascript/sha1.js"></script>
         <Script src="/EspotifyWeb/Javascript/encriptacion.js"></script>
+        <script src="/EspotifyWeb/Bootstrap/js/bootstrap.min.js"></script>
     </body>
 </html>
