@@ -45,7 +45,7 @@ public class ServletGeneral extends HttpServlet {
             WSArtistas wsart = wsarts.getWSArtistasPort();
             WSClientesService wsclis = new WSClientesService();
             WSClientes wscli = wsclis.getWSClientesPort();
-
+            
             if (request.getParameter("Join") != null) {
                 String nickname = request.getParameter("Join");
                 String contrasenia = request.getParameter("Contrasenia");
@@ -54,7 +54,7 @@ public class ServletGeneral extends HttpServlet {
                 if (!data.getUsuarios().isEmpty()) {
                     dt = data.getUsuarios().get(0);
                 }
-
+                
                 if(dt instanceof DtCliente){
                     if (dt != null) {
                         sesion.setAttribute("Usuario", dt);
@@ -65,7 +65,7 @@ public class ServletGeneral extends HttpServlet {
                             //Verificar y actualizar si las suscripciones del cliente que estaban vigentes se vencieron
                             wscli.actualizarVigenciaSuscripciones(dt.getNickname());
                         }
-
+                    
                         response.sendRedirect("/EspotifyMovil/Vistas/index.jsp");
                     } else {
                         if (!(wscli.verificarDatosCli(nickname, nickname) && wsart.verificarDatosArt(nickname, nickname))) {
@@ -73,11 +73,11 @@ public class ServletGeneral extends HttpServlet {
                         } else {
                             sesion.setAttribute("error", "Usuario y contraseña incorrectos");
                         }
+                    
                         response.sendRedirect("/EspotifyMovil/Vistas/IniciarSesion.jsp");
                     }
                 }else{
-                    sesion.setAttribute("error", "Usuario y contraseña incorrectos");
-                    response.sendRedirect("/EspotifyMovil/Vistas/IniciarSesion.jsp");  
+                    response.sendRedirect("/EspotifyMovil/Vistas/IniciarSesion.jsp");
                 }
             }
     }
