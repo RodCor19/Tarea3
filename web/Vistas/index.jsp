@@ -36,6 +36,7 @@
                 </div>
             </div>
         </nav>
+        
         <script src="/EspotifyMovil/Javascript/jquery.min.js"></script>
         <script src="/EspotifyMovil/Bootstrap/js/bootstrap.min.js"></script>
     </body>
