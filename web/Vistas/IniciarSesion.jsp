@@ -10,8 +10,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="/EspotifyWeb/Bootstrap/css/bootstrap.css">
-        <link rel="stylesheet" href="/EspotifyWeb/CSS/estilos.css">
+        <link rel="stylesheet" href="../Bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="../CSS/Estilos.css">
         <link type="image/x-icon" rel="shortcut icon"  href="/EspotifyWeb/Imagenes/espotifyIcono.ico">
         <title>Espotify: Iniciar sesión</title>
     </head>
@@ -52,9 +52,9 @@
                 </div>
             </div>
         </center>
-        <script src="/EspotifyWeb/Javascript/jquery.min.js"></script>
-        <script src="/EspotifyWeb/Javascript/sha1.js"></script>
-        <Script src="/EspotifyWeb/Javascript/encriptacion.js"></script>
-        <script src="/EspotifyWeb/Bootstrap/js/bootstrap.min.js"></script>
+        <script src="../Javascript/jquery.min.js"></script>
+        <script src="../Javascript/sha1.js"></script>
+        <Script src="../Javascript/encriptacion.js"></script>
+        <script src="../Bootstrap/js/bootstrap.min.js"></script>
     </body>
 </html>

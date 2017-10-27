@@ -1,0 +1,293 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 11/09/2017, 04:36:15 PM
+    Author     : Kevin
+*/
+
+
+a.link{
+    color: black;
+}
+
+a.link:hover{
+    color: black;
+    opacity: 0.5;
+}
+
+.lineaAbajo{
+  border-bottom: 1px solid white;
+  padding-bottom: 10px;
+}
+
+.navbar-custom {
+    background-color: #1ED760; /*fondo para el navegador-cabecera// */
+    border-radius: 0px; /*es para que las puntas no queden redondeadas*/
+}
+.navbar {
+  background-image: url("/EspotifyMovil/Imagenes/fondo.jpg");
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding-top: 0px;
+  z-index: 100;
+  border-style: inset;
+  box-shadow: 0px 5px 10px rgba(100, 100, 100, 1);
+}
+
+
+#formBuscar{
+    width: 100%;
+}
+
+#buscar{
+    width: 70%;
+}
+
+#formLista{
+    width: 100%;
+}
+
+#cLista{
+    width: 50%;
+    margin-left: 25%;
+}
+
+#formImagen{
+    width: 100%;
+}
+
+.inputImg{
+    width: 50%;
+    margin-left: 25%;
+}
+
+.linkCabecera{
+    color: white;
+    border-bottom-style: inset;
+    border-radius: 20%;
+    background-color: black;
+}
+
+.iniciarCerrarSesion{
+    color: yellow;
+    background-color: black;
+    border-bottom-style: inset;
+    border-radius: 20%;
+}
+
+.imgAlbum{
+    padding: 4px;
+    border-style: solid;
+    border-color: #1ED760;
+    border-width: 2px 2px 2px 2px;
+    /*opacity: 0.9;*/
+    position: relative;
+    display: inline-block;
+    height: 210px;
+    width: 212px;    
+    border-radius: 100%;
+}
+
+.imgAlbum:hover{
+    opacity: 0.9;
+}
+
+.img-text{
+    top:45%;
+    position: absolute;
+    display:block;
+    width: 100%;
+    color:#0080FF;
+    text-shadow: 1px 0 0 white, -1px 0 0 white, 0 1px 0 white, 0 -1px 0 white, 1px 1px white, -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white;
+}
+
+.img-text:hover{
+    text-decoration: underline;
+}
+
+.img-text:active{
+    color: #1B559F;
+}
+
+.tituloPerfil, .tituloGenero{
+/*    color:#0080FF;*/
+    text-decoration: underline;
+}
+
+.tituloLista{
+    background-color: #1ED760;
+    color: white;
+}
+
+/* Para cambiar color de las pestaÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â±as */
+.nav-tabs > li > a{
+    color: black;
+    padding-left: 13px;
+    padding-right: 13px;
+}
+
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus{
+    color: #337AB7;
+} 
+
+
+/*.nav-tabs{
+  background-color:#1ED760;
+}
+.tab-content{
+    background-color: white;
+    color:black;
+    padding:5px
+}*/
+.nav-tabs{
+  border-color: white;
+}
+/*
+.nav-tabs > li > a:hover{
+    background-color: #1EC160 ;
+    border: medium none;
+    border-radius: 0;
+    color:#fff;
+}*/
+
+.opcionSelec, .opcionSelec:focus{
+    background-color: #343333;
+    color: #1ED760;
+    font-size: medium;
+}
+
+.opcionNoSelec, .opcionNoSelec:focus{
+    background-color: transparent;
+    color: whitesmoke;
+    font-size: medium;
+}
+
+.opcionSelec:hover, .opcionNoSelec:hover{
+    background-color: grey;
+    color: white;
+}
+
+body{
+    background-image: url("/EspotifyMovil/Imagenes/fondo3.jpg");
+
+    height: 600px;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: black;
+    margin-top: 150px;
+}
+
+.imgPerfil{
+    padding: 2px;
+    border-style: solid;
+    border-color: whitesmoke;
+    border-width: 2px 2px 2px 2px;
+    position: relative;
+    display: inline-block;
+    height: 100px;
+    width: 100px;    
+    border-radius: 100%;
+}
+
+.boton{
+    padding: 7px 12px;
+    font-size: 24px;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    color: #fff;
+    background-color: #1ED760;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 6px #999;
+}
+
+.boton:hover {
+    background-color: #0EBF4C;
+    color: whitesmoke;
+}
+
+.boton:active {
+    background-color: #0EBF4C;
+    color: whitesmoke;
+    box-shadow: 0 3px #666;
+    transform: translateY(3px);
+}
+
+.imgGuardar:hover{
+    opacity: 0.5;
+}
+
+.imgGuardar:active{
+    /*background-color: grey;*/
+    opacity: 1;
+}
+
+.texto{
+    width: 100%;
+    font-size: 20px;
+    display: block;
+    text-align: center;
+}
+
+#forminiciar{
+	width:20%;
+	border:1px solid #ccc;
+	margin:20px;
+	padding:20px;
+}
+
+label{
+	font-size:12px;
+	width:20%;
+        text-align: left;
+}
+textarea{
+	resize:horizontal;
+	max-height:300px;
+	min-height:100px;
+}
+
+#boton{/**/
+    margin-bottom:0;
+    background:#1ED760;
+    color:#fff;
+    border:none;
+    width:30%;
+    height:30px;
+}
+
+#boton[type="submit"]:hover{
+	background:#0EBF4C;
+	cursor:pointer;
+}
+
+.x{
+    margin-bottom: 30px;
+}
+
+.filaTema:hover{
+    cursor: pointer;
+    background-color: #ECF8E0;
+}
+
+
+.filaTema:active{
+    cursor: pointer;
+    background-color: #E0F5E6;
+}
+
+.tituloFila:hover{
+    cursor: pointer;
+}
+
+

@@ -11,8 +11,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
       
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="/EspotifyMovil/Bootstrap/css/bootstrap.css">
-        <link rel="stylesheet" href="/EspotifyWeb/CSS/estilos.css">
+        <link rel="stylesheet" href="../Bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="../CSS/Estilos.css">
         <link type="image/x-icon" rel="shortcut icon"  href="/EspotifyWeb/Imagenes/espotifyIcono.ico">
         <title>Espotify</title>
     </head>
@@ -25,7 +25,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span> 
                     </button>
-                    <a class="navbar-brand" href="#">Espotify</a>
+                    <a class="navbar-brand" href="#">Espotify </a>
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
@@ -36,7 +36,7 @@
                 </div>
             </div>
         </nav>
-        <script src="/EspotifyMovil/Javascript/jquery.min.js"></script>
-        <script src="/EspotifyMovil/Bootstrap/js/bootstrap.min.js"></script>
+        <script src="../Javascript/jquery.min.js"></script>
+        <script src="../Bootstrap/js/bootstrap.min.js"></script>
     </body>
 </html>
