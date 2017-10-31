@@ -118,6 +118,12 @@ public class ServletGeneral extends HttpServlet {
                         response.sendRedirect("/EspotifyMovil/Vistas/IniciarSesion.jsp");
                     }
                 }
+                
+                if (request.getParameter("CerrarSesion") != null) {
+                    request.getSession().removeAttribute("Usuario");
+                    response.sendRedirect("/EspotifyMovil/Vistas/IniciarSesion.jsp");
+                }
+                
             }catch(Exception ex){
                 response.sendRedirect("/EspotifyMovil/Vistas/Error.html");
             }

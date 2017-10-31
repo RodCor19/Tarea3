@@ -37,14 +37,14 @@
                         <li><a href="#">Géneros</a></li>
                         <li><a href="#">Artistas</a></li> 
                         <li><a href="#">Listas de Reproducción</a></li> 
-                        <li><a href="#">Cerrar sesión</a></li> 
+                        <li><a href="#">Cerrar sesión<a href="/EspotifyMovil/ServletGeneral?CerrarSesion=true"></a></li> 
                     </ul>
                 </div>
             </div>
         </nav>
                 <div id="fondo">
                     
-                </div>
+                </div>  
         <script src="../Javascript/jquery.min.js"></script>
         <script src="../Bootstrap/js/bootstrap.min.js"></script>
     </body>
