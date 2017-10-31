@@ -49,78 +49,79 @@ public class ServletGeneral extends HttpServlet {
             HttpSession sesion = request.getSession();
             
             try{
-            Properties propiedades = new Properties();
-            String rutaConfWS = this.getClass().getClassLoader().getResource("").getPath();
-            rutaConfWS = rutaConfWS.replace("build/web/WEB-INF/classes/", "webservices.properties");
-            rutaConfWS = rutaConfWS.replace("%20", " ");
-            InputStream entrada = new FileInputStream(rutaConfWS);
-            propiedades.load(entrada);// cargamos el archivo de propiedades
+                Properties propiedades = new Properties();
+                String rutaConfWS = this.getClass().getClassLoader().getResource("").getPath();
+                rutaConfWS = rutaConfWS.replace("build/web/WEB-INF/classes/", "webservices.properties");
+                rutaConfWS = rutaConfWS.replace("%20", " ");
+                InputStream entrada = new FileInputStream(rutaConfWS);
+                propiedades.load(entrada);// cargamos el archivo de propiedades
+             
+                URL url = new URL("http://" + propiedades.getProperty("ipServidor") + ":" + propiedades.getProperty("puertoWSArt") + "/" + propiedades.getProperty("nombreWSArt"));
+                WSArtistasService wsarts = new WSArtistasService(url,new QName("http://WebServices/", "WSArtistasService"));
+                WSArtistas wsart = wsarts.getWSArtistasPort();
             
-            
-            URL url = new URL("http://" + propiedades.getProperty("ipServidor") + ":" + propiedades.getProperty("puertoWSArt") + "/" + propiedades.getProperty("nombreWSArt"));
-            WSArtistasService wsarts = new WSArtistasService(url,new QName("http://WebServices/", "WSArtistasService"));
-            WSArtistas wsart = wsarts.getWSArtistasPort();
-            
-            url = new URL("http://" + propiedades.getProperty("ipServidor") + ":" + propiedades.getProperty("puertoWSCli") + "/" + propiedades.getProperty("nombreWSCli"));
-            WSClientesService wsclis = new WSClientesService(url,new QName("http://WebServices/", "WSClientesService"));
-            WSClientes wscli = wsclis.getWSClientesPort();
-            String claveCliente = request.getParameter("Contrasenia");
-            String nickCookie = null;
-            Cookie[] cookies = request.getCookies();
+                url = new URL("http://" + propiedades.getProperty("ipServidor") + ":" + propiedades.getProperty("puertoWSCli") + "/" + propiedades.getProperty("nombreWSCli"));
+                WSClientesService wsclis = new WSClientesService(url,new QName("http://WebServices/", "WSClientesService"));
+                WSClientes wscli = wsclis.getWSClientesPort();
+                
+                String claveCliente = request.getParameter("Contrasenia");
+                String nickCookie = null;
+                Cookie[] cookies = request.getCookies();
         
-            for(Cookie c: cookies){
-                if(c.getName().equals("Join")){
-                    nickCookie = c.getValue();
-                    claveCliente = nickCookie;
+                for(Cookie c: cookies){
+                    if(c.getName().equals("Join")){
+                        nickCookie = c.getValue();
+                        claveCliente = nickCookie;
+                    }
                 }
-            }
             
-            if (request.getParameter("Join") != null && claveCliente!=null) {
-                String nickname = request.getParameter("Join");
-                String contrasenia = request.getParameter("Contrasenia");
-                DataUsuarios data = wsart.verificarLoginArtista(nickname, contrasenia);
-                DtUsuario dt = null;
-                if (!data.getUsuarios().isEmpty()) {
-                    dt = data.getUsuarios().get(0);
-                }
+                if (request.getParameter("Join") != null && claveCliente!=null) {
+                    String nickname = request.getParameter("Join");
+                    String contrasenia = request.getParameter("Contrasenia");
+                    DataUsuarios data = wsart.verificarLoginArtista(nickname, contrasenia);
+                    DtUsuario dt = null;
+                    
+                    if (!data.getUsuarios().isEmpty()) {
+                        dt = data.getUsuarios().get(0);
+                    }
                
-                if(dt instanceof DtCliente){
-                    if (dt != null) {
-                        if(request.getParameter("recordarme")!= null){
-                            Cookie c = new Cookie(contrasenia,dt.toString());
-                            c.setMaxAge(60*60*24);
-                            response.addCookie(c);
-                        }
+                    if(dt instanceof DtCliente){
+                        if (dt != null) {
+                            if(request.getParameter("recordarme")!= null){
+                                Cookie c = new Cookie(contrasenia,dt.toString());
+                                c.setMaxAge(60*60*24);
+                                response.addCookie(c);
+                            }
                         
-                        sesion.setAttribute("Usuario", dt);
-                        sesion.removeAttribute("error");
-                        sesion.setAttribute("Mensaje", "Bienvenido/a " + dt.getNombre() + " " + dt.getApellido());
+                            sesion.setAttribute("Usuario", dt);
+                            sesion.removeAttribute("error");
+                            sesion.setAttribute("Mensaje", "Bienvenido/a " + dt.getNombre() + " " + dt.getApellido());
  
-                        if (dt instanceof DtCliente) {
-                            //Verificar y actualizar si las suscripciones del cliente que estaban vigentes se vencieron
-                            wscli.actualizarVigenciaSuscripciones(dt.getNickname());
-                        }
+                            if (dt instanceof DtCliente) {
+                                //Verificar y actualizar si las suscripciones del cliente que estaban vigentes se vencieron
+                                wscli.actualizarVigenciaSuscripciones(dt.getNickname());
+                            }
                     
-                        response.sendRedirect("/EspotifyMovil/Vistas/index.jsp");
-                    } else {
-                        if (!(wscli.verificarDatosCli(nickname, nickname) && wsart.verificarDatosArt(nickname, nickname))) {
-                            sesion.setAttribute("error", "Contraseña incorrecta");
+                            response.sendRedirect("/EspotifyMovil/Vistas/index.jsp");
                         } else {
-                            sesion.setAttribute("error", "Usuario y contraseña incorrectos");
+                            if (!(wscli.verificarDatosCli(nickname, nickname) && wsart.verificarDatosArt(nickname, nickname))) {
+                                sesion.setAttribute("error", "Contraseña incorrecta");
+                            } else {
+                                sesion.setAttribute("error", "Usuario y contraseña incorrectos");
+                            }
+                    
+                            response.sendRedirect("/EspotifyMovil/Vistas/IniciarSesion.jsp");
                         }
                     
+                    }else{
+                        sesion.setAttribute("error", "No pueden ingresar artistas");
                         response.sendRedirect("/EspotifyMovil/Vistas/IniciarSesion.jsp");
                     }
-                    
-                }else{
-                    sesion.setAttribute("error", "No pueden ingresar artistas");
-                    response.sendRedirect("/EspotifyMovil/Vistas/IniciarSesion.jsp");
                 }
+            }catch(Exception ex){
+                response.sendRedirect("/EspotifyMovil/Vistas/Error.html");
             }
-        }catch(Exception ex){
-        response.sendRedirect("/EspotifyWeb/Vistas/Error.html");
         }
-    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
