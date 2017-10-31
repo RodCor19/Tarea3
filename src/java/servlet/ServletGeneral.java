@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -45,8 +46,18 @@ public class ServletGeneral extends HttpServlet {
             WSArtistas wsart = wsarts.getWSArtistasPort();
             WSClientesService wsclis = new WSClientesService();
             WSClientes wscli = wsclis.getWSClientesPort();
+            String claveCliente = request.getParameter("Contrasenia");
+            String nickCookie = null;
+            Cookie[] cookies = request.getCookies();
+        
+            for(Cookie c: cookies){
+                if(c.getName().equals("Join")){
+                    nickCookie = c.getValue();
+                    claveCliente = nickCookie;
+                }
+            }
             
-            if (request.getParameter("Join") != null) {
+            if (request.getParameter("Join") != null && claveCliente!=null) {
                 String nickname = request.getParameter("Join");
                 String contrasenia = request.getParameter("Contrasenia");
                 DataUsuarios data = wsart.verificarLoginArtista(nickname, contrasenia);
@@ -54,13 +65,19 @@ public class ServletGeneral extends HttpServlet {
                 if (!data.getUsuarios().isEmpty()) {
                     dt = data.getUsuarios().get(0);
                 }
-                
+               
                 if(dt instanceof DtCliente){
                     if (dt != null) {
+                        if(request.getParameter("recordarme")!= null){
+                            Cookie c = new Cookie(contrasenia,dt.toString());
+                            c.setMaxAge(60*60*24);
+                            response.addCookie(c);
+                        }
+                        
                         sesion.setAttribute("Usuario", dt);
                         sesion.removeAttribute("error");
                         sesion.setAttribute("Mensaje", "Bienvenido/a " + dt.getNombre() + " " + dt.getApellido());
-
+ 
                         if (dt instanceof DtCliente) {
                             //Verificar y actualizar si las suscripciones del cliente que estaban vigentes se vencieron
                             wscli.actualizarVigenciaSuscripciones(dt.getNickname());
@@ -76,6 +93,7 @@ public class ServletGeneral extends HttpServlet {
                     
                         response.sendRedirect("/EspotifyMovil/Vistas/IniciarSesion.jsp");
                     }
+                    
                 }else{
                     sesion.setAttribute("error", "No pueden ingresar artistas");
                     response.sendRedirect("/EspotifyMovil/Vistas/IniciarSesion.jsp");
