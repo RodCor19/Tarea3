@@ -30,17 +30,21 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span> 
                     </button>
-                    <a class="navbar-brand" href="#">Espotify   Bienvenido <%=dt.getNombre()+dt.getApellido()%></a>
+                    <a class="navbar-brand" href="#" style="color: yellow;">Bienvenido <%=dt.getNombre()+" "+dt.getApellido()%></a>
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
-                        <li><a href="#">Consultar albúm</a></li>
-                        <li><a href="#">Consultar lista de reproducción</a></li> 
+                        <li><a href="#">Géneros</a></li>
+                        <li><a href="#">Artistas</a></li> 
+                        <li><a href="#">Listas de Reproducción</a></li> 
                         <li><a href="#">Cerrar sesión</a></li> 
                     </ul>
                 </div>
             </div>
         </nav>
+                <div id="fondo">
+                    
+                </div>
         <script src="../Javascript/jquery.min.js"></script>
         <script src="../Bootstrap/js/bootstrap.min.js"></script>
     </body>
