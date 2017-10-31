@@ -22,12 +22,13 @@ a.link:hover{
   padding-bottom: 10px;
 }
 
+
+
 .navbar-custom {
     background-color: #1ED760; /*fondo para el navegador-cabecera// */
     border-radius: 0px; /*es para que las puntas no queden redondeadas*/
 }
 .navbar {
-  background-image: url("/EspotifyMovil/Imagenes/fondo.jpg");
   overflow: hidden;
   position: fixed;
   top: 0;
@@ -174,7 +175,7 @@ a.link:hover{
 }
 
 body{
-    background-image: url("/EspotifyMovil/Imagenes/fondo3.jpg");
+    background-image: url("/EspotifyMovil/Imagenes/fondo4.jpg");
 
     height: 600px;
 
@@ -292,3 +293,4 @@ textarea{
 .popover-content {
     padding: 0px;
 }
+

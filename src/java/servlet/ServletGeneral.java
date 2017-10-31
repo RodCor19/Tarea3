@@ -95,6 +95,7 @@ public class ServletGeneral extends HttpServlet {
                         response.sendRedirect("/EspotifyMovil/Vistas/IniciarSesion.jsp");
                     }
                 }else{
+                    sesion.setAttribute("error", "No pueden ingresar artistas");
                     response.sendRedirect("/EspotifyMovil/Vistas/IniciarSesion.jsp");
                 }
             }
