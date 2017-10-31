@@ -5,8 +5,12 @@
  */
 package servlet;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.net.URL;
+import java.util.Properties;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -14,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.namespace.QName;
 import webservices.DataUsuarios;
 import webservices.DtCliente;
 import webservices.DtUsuario;
@@ -42,9 +47,22 @@ public class ServletGeneral extends HttpServlet {
         throws ServletException, IOException {
             response.setContentType("text/html;charset=UTF-8");
             HttpSession sesion = request.getSession();
-            WSArtistasService wsarts = new WSArtistasService(/*url*/);
+            
+            try{
+            Properties propiedades = new Properties();
+            String rutaConfWS = this.getClass().getClassLoader().getResource("").getPath();
+            rutaConfWS = rutaConfWS.replace("build/web/WEB-INF/classes/", "webservices.properties");
+            rutaConfWS = rutaConfWS.replace("%20", " ");
+            InputStream entrada = new FileInputStream(rutaConfWS);
+            propiedades.load(entrada);// cargamos el archivo de propiedades
+            
+            
+            URL url = new URL("http://" + propiedades.getProperty("ipServidor") + ":" + propiedades.getProperty("puertoWSArt") + "/" + propiedades.getProperty("nombreWSArt"));
+            WSArtistasService wsarts = new WSArtistasService(url,new QName("http://WebServices/", "WSArtistasService"));
             WSArtistas wsart = wsarts.getWSArtistasPort();
-            WSClientesService wsclis = new WSClientesService();
+            
+            url = new URL("http://" + propiedades.getProperty("ipServidor") + ":" + propiedades.getProperty("puertoWSCli") + "/" + propiedades.getProperty("nombreWSCli"));
+            WSClientesService wsclis = new WSClientesService(url,new QName("http://WebServices/", "WSClientesService"));
             WSClientes wscli = wsclis.getWSClientesPort();
             String claveCliente = request.getParameter("Contrasenia");
             String nickCookie = null;
@@ -99,6 +117,9 @@ public class ServletGeneral extends HttpServlet {
                     response.sendRedirect("/EspotifyMovil/Vistas/IniciarSesion.jsp");
                 }
             }
+        }catch(Exception ex){
+        response.sendRedirect("/EspotifyWeb/Vistas/Error.html");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -175,7 +175,7 @@ a.link:hover{
 }
 
 body{
-    background-image: url("/EspotifyMovil/Imagenes/fondo4.jpg");
+    background-image: url("/EspotifyMovil/Imagenes/fondo3.jpg");
 
     height: 600px;
 
@@ -293,4 +293,3 @@ textarea{
 .popover-content {
     padding: 0px;
 }
-
