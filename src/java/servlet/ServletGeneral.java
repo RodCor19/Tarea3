@@ -15,6 +15,7 @@ import java.util.Properties;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -59,36 +60,41 @@ public class ServletGeneral extends HttpServlet {
             rutaConfWS = rutaConfWS.replace("%20", " ");
             InputStream entrada = new FileInputStream(rutaConfWS);
             propiedades.load(entrada);// cargamos el archivo de propiedades
-            
-            
+
             URL url = new URL("http://" + propiedades.getProperty("ipServidor") + ":" + propiedades.getProperty("puertoWSArt") + "/" + propiedades.getProperty("nombreWSArt"));
-            WSArtistasService wsarts = new WSArtistasService(url,new QName("http://WebServices/", "WSArtistasService"));
+            WSArtistasService wsarts = new WSArtistasService(url, new QName("http://WebServices/", "WSArtistasService"));
             WSArtistas wsart = wsarts.getWSArtistasPort();
-            
+
             url = new URL("http://" + propiedades.getProperty("ipServidor") + ":" + propiedades.getProperty("puertoWSCli") + "/" + propiedades.getProperty("nombreWSCli"));
-            WSClientesService wsclis = new WSClientesService(url,new QName("http://WebServices/", "WSClientesService"));
+            WSClientesService wsclis = new WSClientesService(url, new QName("http://WebServices/", "WSClientesService"));
             WSClientes wscli = wsclis.getWSClientesPort();
-            
+
             if (request.getParameter("Join") != null) {
                 String nickname = request.getParameter("Join");
                 String contrasenia = request.getParameter("Contrasenia");
                 DataUsuarios data = wsart.verificarLoginArtista(nickname, contrasenia);
                 DtUsuario dt = null;
+
                 if (!data.getUsuarios().isEmpty()) {
                     dt = data.getUsuarios().get(0);
                 }
-                
-                if(dt instanceof DtCliente){
+
+                if (dt instanceof DtCliente) {
                     if (dt != null) {
+                        if (request.getParameter("recordarme") != null) {
+                            Cookie c = new Cookie("Join", dt.getNickname());
+                            c.setMaxAge(60 * 60 * 24);
+                            response.addCookie(c);
+                        }
+
                         sesion.setAttribute("Usuario", dt);
                         sesion.removeAttribute("error");
                         sesion.setAttribute("Mensaje", "Bienvenido/a " + dt.getNombre() + " " + dt.getApellido());
 
-                        if (dt instanceof DtCliente) {
+                        
                             //Verificar y actualizar si las suscripciones del cliente que estaban vigentes se vencieron
-                            wscli.actualizarVigenciaSuscripciones(dt.getNickname());
-                        }
-                    
+                        wscli.actualizarVigenciaSuscripciones(dt.getNickname());
+                        
                         response.sendRedirect("ServletGeneral?Inicio=true");
                     } else {
                         if (!(wscli.verificarDatosCli(nickname, nickname) && wsart.verificarDatosArt(nickname, nickname))) {
@@ -109,18 +115,57 @@ public class ServletGeneral extends HttpServlet {
             }
             if (request.getParameter("CerrarSesion") != null) {
                 request.getSession().removeAttribute("Usuario");
+                Cookie[] cookies = request.getCookies();
+                cookies = request.getCookies();
+                
+                for(Cookie c: cookies){
+                    if(c.getName().equals("Join")){
+                        c.setMaxAge(0); //se elimina el cookie
+                        response.addCookie(c);
+                    }
+                }
+                
                 response.sendRedirect("/EspotifyMovil/Vistas/IniciarSesion.jsp");
             }
+
             if (request.getParameter("Inicio") != null) {
                 List<DtGenero> generos = wsart.buscarGenero("").getGeneros();
                 request.getSession().setAttribute("Generos", generos);
                 List<DtUsuario> artistas = wsart.listarArtistas().getUsuarios();
                 request.getSession().setAttribute("Artistas", artistas);
-                response.sendRedirect("/EspotifyMovil/Vistas/index.jsp");
+                
+                String claveCliente = null;
+                String nickCookie = null;
+                Cookie[] cookies = request.getCookies();
+                
+                if(cookies!=null){
+                    for (Cookie c : cookies) {
+                        if (c.getName().equals("Join")) {
+                            nickCookie = c.getValue();
+                            claveCliente = nickCookie;
+                        }
+                    }
+                }
+                
+                if(claveCliente!=null){
+                    DtCliente dt=wscli.verPerfilCliente(claveCliente);
+                    wscli.actualizarVigenciaSuscripciones(dt.getNickname());
+                    request.getSession().setAttribute("Usuario",dt);
+                    sesion.setAttribute("Mensaje", "Bienvenido/a " + dt.getNombre() + " " + dt.getApellido());
+                    response.sendRedirect("/EspotifyMovil/Vistas/index.jsp");
+                }
+                else{
+                    if (sesion.getAttribute("Usuario")!=null){
+                        response.sendRedirect("/EspotifyMovil/Vistas/index.jsp");
+                    }
+                    else{
+                        response.sendRedirect("/EspotifyMovil/Vistas/IniciarSesion.jsp"); 
+                    }
+                }
             }
-        }catch(Exception ex){
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("Vistas/Error.html");
-        requestDispatcher.forward(request, response);
+
+        } catch (Exception ex) {
+           response.sendRedirect("/EspotifyMovil/Vistas/Error.html");
         }
     }
 

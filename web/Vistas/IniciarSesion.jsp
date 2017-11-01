@@ -3,10 +3,11 @@
     Created on : 24/10/2017, 01:24:08 PM
     Author     : stephiRM
 --%>
-
+<% if (request.getSession().getAttribute("Usuario")==null){ %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+    
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -60,3 +61,6 @@
         <script src="../Bootstrap/js/bootstrap.min.js"></script>
     </body>
 </html>
+<%} else {%>
+<meta http-equiv="refresh" content="0; URL=/EspotifyMovil/ServletGeneral?Inicio=true">
+<%}%>
