@@ -30,7 +30,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span> 
                     </button>
-                    <a class="navbar-brand" href="#" style="color: yellowgreen;">Bienvenido <%=dt.getNombre()+" "+dt.getApellido()%></a>
+                    <a class="navbar-brand" href="#" style="color: #00ff66;">Bienvenido <%=dt.getNombre()+" "+dt.getApellido()%></a>
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">

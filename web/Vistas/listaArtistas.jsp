@@ -20,7 +20,7 @@
         <div class="container">
 <div class="row">
     <%for(DtUsuario art: artistas){ %>
-    <div class="col-xs-6 col-md-4">
+    <div class="col-xs-6 col-md-4" >
         <a href="#"  >
             <img src="../Imagenes/iconoArtista.png" alt="foto del usuario" class="img-responsive img-rounded" title="Artista" style="margin-bottom: 4px; margin-right: 2px;"><!--Cambiar por imagen del usuario-->
             
