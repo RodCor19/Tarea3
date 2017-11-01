@@ -10,7 +10,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.util.List;
 import java.util.Properties;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,7 +21,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.xml.namespace.QName;
 import webservices.DataUsuarios;
+import webservices.DtArtista;
 import webservices.DtCliente;
+import webservices.DtGenero;
 import webservices.DtUsuario;
 import webservices.WSArtistas;
 import webservices.WSArtistasService;
@@ -46,6 +50,7 @@ public class ServletGeneral extends HttpServlet {
         throws ServletException, IOException {
             response.setContentType("text/html;charset=UTF-8");
             HttpSession sesion = request.getSession();
+            
             
             try{
             Properties propiedades = new Properties();
@@ -84,23 +89,38 @@ public class ServletGeneral extends HttpServlet {
                             wscli.actualizarVigenciaSuscripciones(dt.getNickname());
                         }
                     
-                        response.sendRedirect("/EspotifyMovil/Vistas/index.jsp");
+                        response.sendRedirect("ServletGeneral?Inicio=true");
                     } else {
                         if (!(wscli.verificarDatosCli(nickname, nickname) && wsart.verificarDatosArt(nickname, nickname))) {
                             sesion.setAttribute("error", "Contraseña incorrecta");
                         } else {
                             sesion.setAttribute("error", "Usuario y contraseña incorrectos");
                         }
-                    
                         response.sendRedirect("/EspotifyMovil/Vistas/IniciarSesion.jsp");
                     }
-                }else{
+                }if(dt instanceof DtArtista){
                     sesion.setAttribute("error", "No pueden ingresar artistas");
                     response.sendRedirect("/EspotifyMovil/Vistas/IniciarSesion.jsp");
                 }
+                if (dt==null){
+                    sesion.setAttribute("error", "Usuario y contraseña incorrectos");
+                    response.sendRedirect("/EspotifyMovil/Vistas/IniciarSesion.jsp");
+                }
+            }
+            if (request.getParameter("CerrarSesion") != null) {
+                request.getSession().removeAttribute("Usuario");
+                response.sendRedirect("/EspotifyMovil/Vistas/IniciarSesion.jsp");
+            }
+            if (request.getParameter("Inicio") != null) {
+                List<DtGenero> generos = wsart.buscarGenero("").getGeneros();
+                request.getSession().setAttribute("Generos", generos);
+                List<DtUsuario> artistas = wsart.listarArtistas().getUsuarios();
+                request.getSession().setAttribute("Artistas", artistas);
+                response.sendRedirect("/EspotifyMovil/Vistas/index.jsp");
             }
         }catch(Exception ex){
-        response.sendRedirect("/EspotifyWeb/Vistas/Error.html");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("Vistas/Error.html");
+        requestDispatcher.forward(request, response);
         }
     }
 
