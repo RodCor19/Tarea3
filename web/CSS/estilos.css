@@ -80,8 +80,12 @@ a.link:hover{
     border-radius: 20%;
 }
 
+.col-xs-6 img{
+    width: 100%;
+}
+
 .imgAlbum{
-    padding: 4px;
+    /*padding: 2px;*/
     border-style: solid;
     border-color: #1ED760;
     border-width: 2px 2px 2px 2px;
@@ -98,12 +102,12 @@ a.link:hover{
 }
 
 .img-text{
-    top:45%;
+    top: 40%;
     position: absolute;
     display:block;
-    width: 100%;
-    color:#0080FF;
-    text-shadow: 1px 0 0 white, -1px 0 0 white, 0 1px 0 white, 0 -1px 0 white, 1px 1px white, -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white;
+    width: 80%;
+    color:  #00ff66;
+    text-shadow: 10px 0 0 black , -1px 0 0 black, 0 1px 0 black, 0 -1px 0 black, 1px 1px black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black;
 }
 
 .img-text:hover{
@@ -180,10 +184,10 @@ body{
     height: 600px;
 
     background-position: center;
-    background-repeat: no-repeat;
+    background-repeat: repeat;
     background-size: cover;
     color: black;
-    margin-top: 150px;
+    margin-top: 90px;
 }
 
 .imgPerfil{
