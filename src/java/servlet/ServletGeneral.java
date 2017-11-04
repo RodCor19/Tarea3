@@ -116,7 +116,7 @@ public class ServletGeneral extends HttpServlet {
             if (request.getParameter("CerrarSesion") != null) {
                 request.getSession().removeAttribute("Usuario");
                 Cookie[] cookies = request.getCookies();
-                cookies = request.getCookies();
+                
                 
                 for(Cookie c: cookies){
                     if(c.getName().equals("Join")){
