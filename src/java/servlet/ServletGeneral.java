@@ -8,10 +8,13 @@ package servlet;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.util.List;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,14 +25,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.xml.namespace.QName;
 import webservices.DataUsuarios;
+import webservices.DtAlbum;
 import webservices.DtArtista;
 import webservices.DtCliente;
 import webservices.DtGenero;
+import webservices.DtTema;
 import webservices.DtUsuario;
+import webservices.IOException_Exception;
 import webservices.WSArtistas;
 import webservices.WSArtistasService;
 import webservices.WSClientes;
 import webservices.WSClientesService;
+import webservices.WSArchivos;
+import webservices.WSArchivosService;
+
 
 /**
  *
@@ -68,6 +77,10 @@ public class ServletGeneral extends HttpServlet {
             url = new URL("http://" + propiedades.getProperty("ipServidor") + ":" + propiedades.getProperty("puertoWSCli") + "/" + propiedades.getProperty("nombreWSCli"));
             WSClientesService wsclis = new WSClientesService(url, new QName("http://WebServices/", "WSClientesService"));
             WSClientes wscli = wsclis.getWSClientesPort();
+            
+            url = new URL("http://" + propiedades.getProperty("ipServidor") + ":" + propiedades.getProperty("puertoWSArch") + "/" + propiedades.getProperty("nombreWSArch"));
+            WSArchivosService wsarchs = new WSArchivosService(url);
+            WSArchivos wsarch = wsarchs.getWSArchivosPort();
 
             if (request.getParameter("Join") != null) {
                 String nickname = request.getParameter("Join");
@@ -163,6 +176,75 @@ public class ServletGeneral extends HttpServlet {
                     }
                 }
             }
+            if (request.getParameter("listaralbumes") != null) {
+                String artista = request.getParameter("listaralbumes");
+                List<DtUsuario> artistas = (List<DtUsuario>) request.getSession().getAttribute("Artistas");
+                DtArtista dt = null;
+                for (int i=0;i<artistas.size();i++){
+                    if (artistas.get(i).getNickname().equals(artista)){
+                        dt = (DtArtista) artistas.get(i);
+                    }
+                }
+                if (dt!=null){
+                    List<DtAlbum> albumes = dt.getAlbumes();
+                    request.getSession().setAttribute("Albumes", albumes);
+                    request.getSession().setAttribute("PerfilArt", dt);
+                }
+            }
+            if (request.getParameter("consultaalbum") != null){
+                String nomalbum = request.getParameter("consultaalbum");
+                DtArtista dt = (DtArtista) sesion.getAttribute("PerfilArt");
+                DtAlbum dta = null;
+                List<DtAlbum> listaalbumes = dt.getAlbumes();
+                for (int i=0;i<listaalbumes.size();i++){
+                    if (listaalbumes.get(i).getNombre().equals(nomalbum)){
+                        dta = (DtAlbum) listaalbumes.get(i);
+                    }
+                }
+                if (dta!=null){
+                    sesion.setAttribute("veralbum", dta);
+                }
+            }
+            
+            if (request.getParameter("tipo")!= null) {
+                String tipoArchivo = request.getParameter("tipo");
+                if (tipoArchivo.equals("audio")) {
+                    try {
+                        String ruta = request.getParameter("ruta");
+                        response.setContentType("audio/mpeg");
+                        response.addHeader("Content-Disposition", "attachment; filename=" + "NombreTema.mp3"); //indica que es un archivo para descargar
+
+                        byte[] audio = wsarch.cargarArchivo(ruta).getByteArray();
+                        System.out.println(audio.length);
+
+                        response.setContentType("audio/mpeg");
+                        response.setContentLength((int) audio.length);
+
+                        OutputStream out = response.getOutputStream();
+                        out.write(audio);
+                        out.close();
+
+                    } catch (IOException_Exception ex) {
+                        Logger.getLogger(ServletGeneral.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    try {
+                        // tipo == "imagen"
+                        String ruta = request.getParameter("ruta");
+
+                        byte[] img = wsarch.cargarArchivo(ruta).getByteArray();
+                        response.setContentType("image/jpg");
+                        response.setContentLength((int) img.length);
+                        OutputStream out = response.getOutputStream();
+                        //ImageIO.write(img, "png", out);
+                        out.write(img);
+                        out.close();
+                    } catch (IOException_Exception ex) {
+                        Logger.getLogger(ServletGeneral.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+            
 
         } catch (Exception ex) {
            response.sendRedirect("/EspotifyMovil/Vistas/Error.html");

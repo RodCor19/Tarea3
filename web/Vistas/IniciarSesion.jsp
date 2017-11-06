@@ -21,10 +21,8 @@
           <center>
             <div class="container">
                 <div class="row">
-                    <div class="btn-group-vertical col-sm-2">
-                    
-                    </div>
-                    <div class="col-sm-8 text-left">
+                    <img src="../Imagenes/Espotify.png" class="img-responsive" style="width: 60%;margin-bottom: 20%;margin-top: -5%;">
+                    <div class="col-sm-12">
                         <center><h1>Iniciar sesión</h1></center>
                         <ul class="list-group">
                             <form id="iniciar" action="../ServletGeneral" method="post">
@@ -47,9 +45,6 @@
                             </form>
                         </ul>
                         <br>
-                    </div>
-                    <div class="col-sm-2">
-                   
                     </div>
                 </div>
             </div>
