@@ -58,5 +58,21 @@
         <delete dir="${build.generated.sources.dir}/jax-ws/webservices"/>
         <delete dir="${build.generated.dir}/jax-wsCache/wsartistas"/>
     </target>
-    <target name="wsimport-client-generate" depends="wsimport-client-wsclientes, wsimport-client-wsartistas"/>
+    <target name="wsimport-client-wsarchivos" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/wsarchivos"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/wsarchivos" destdir="${build.generated.dir}/jax-wsCache/wsarchivos" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/wsarchivos/wsdl/localhost_8089/wsarchivos.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:8089/wsarchivos?wsdl" xnocompile="true" xendorsed="true">
+            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/wsarchivos/wsdl/localhost_8089/wsarchivos.wsdl"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/wsarchivos"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/wsarchivos">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="wsimport-client-clean-wsarchivos" depends="-init-project">
+        <delete dir="${build.generated.sources.dir}/jax-ws/webservices"/>
+        <delete dir="${build.generated.dir}/jax-wsCache/wsarchivos"/>
+    </target>
+    <target name="wsimport-client-generate" depends="wsimport-client-wsclientes, wsimport-client-wsartistas, wsimport-client-wsarchivos"/>
 </project>

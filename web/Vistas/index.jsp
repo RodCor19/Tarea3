@@ -14,12 +14,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="../Bootstrap/css/bootstrap.css">
         <link rel="stylesheet" href="../CSS/estilos.css">
-        <link type="image/x-icon" rel="shortcut icon"  href=../Imagenes/espotifyIcono.ico">
+        <link type="image/x-icon" rel="shortcut icon"  href="../Imagenes/espotifyIcono.ico">
         <title>Espotify</title>
     </head>
     <body>
         <% 
         HttpSession sesion = request.getSession();
+        if (sesion.getAttribute("Usuario")!=null){
         DtUsuario dt = (DtUsuario) sesion.getAttribute("Usuario");
         %>
         <nav class="navbar navbar-inverse">
@@ -30,12 +31,12 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span> 
                     </button>
-                    <a class="navbar-brand" href="#" style="color: yellowgreen;">Bienvenido <%=dt.getNombre()+" "+dt.getApellido()%></a>
+                    <a class="navbar-brand"  href="#" style="color: #00ff66;"> Bienvenido <%=dt.getNombre()+" "+dt.getApellido()%></a>
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
-                        <li><a href="#">Géneros</a></li>
-                        <li><a href="#">Artistas</a></li> 
+                        <li><a id="btngeneros" href="#">Géneros</a></li>
+                        <li><a id="btnartistas" href="#">Artistas</a></li> 
                         <li><a href="#">Listas de Reproducción</a></li> 
                         <li><a href="/EspotifyMovil/ServletGeneral?CerrarSesion=true">Cerrar sesión</a></li> 
                     </ul>
@@ -50,5 +51,10 @@
             </div>
         <script src="../Javascript/jquery.min.js"></script>
         <script src="../Bootstrap/js/bootstrap.min.js"></script>
+        <script src="../Javascript/principal.js"></script>
+        <%}
+        else{%>
+            <meta http-equiv="refresh" content="0; URL=/EspotifyMovil/ServletGeneral?Inicio=true">
+        <%}%>
     </body>
 </html>
