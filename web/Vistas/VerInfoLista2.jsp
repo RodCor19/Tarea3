@@ -1,6 +1,6 @@
 <%-- 
-    Document   : VerInfoLista
-    Created on : 07/11/2017, 05:58:47 PM
+    Document   : VerInfoLista2
+    Created on : 08/11/2017, 05:24:34 PM
     Author     : ninoh
 --%>
 
@@ -13,7 +13,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <%DtLista dt = (DtLista) session.getAttribute("Lista");
+        <%DtLista dt = (DtLista) session.getAttribute("Lista2");
           List<DtTema> temas = dt.getTemas();
           Collections.reverse(temas);
         %>

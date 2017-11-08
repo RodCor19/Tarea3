@@ -33,6 +33,7 @@ import webservices.DtArtista;
 import webservices.DtCliente;
 import webservices.DtGenero;
 import webservices.DtLista;
+import webservices.DtListaP;
 import webservices.DtListaPD;
 import webservices.DtTema;
 import webservices.DtUsuario;
@@ -134,25 +135,18 @@ public class ServletGeneral extends HttpServlet {
 
                 response.sendRedirect("/EspotifyMovil/Vistas/IniciarSesion.jsp");
             }
-            if (request.getParameter("listaalbumesg")!= null){
-                String nombre= request.getParameter("listaalbumesg");
-                List<DtAlbum> albumnes = wsart.listarAlbumGenero(nombre).getAlbumes();
-                List<DtLista> listas = wsart.getListasGenero(nombre).getListas();
-                request.getSession().setAttribute("Albume", albumnes);
-                request.getSession().setAttribute("Listas", listas);                
-            }
-            if (request.getParameter("listarlistapd")!= null){
-                String nLista = request.getParameter("listarlistapd");
-                nLista = nLista.trim();
-                DtListaPD aux = wscli.listaPD(nLista);
-                request.getSession().setAttribute("Lista", (DtLista)aux);
-            }
+            
             if (request.getParameter("Inicio") != null) {
                 List<DtGenero> generos = wsart.buscarGenero("").getGeneros();
                 request.getSession().setAttribute("Generos", generos);
                 List<DtUsuario> artistas = wsart.listarArtistas().getUsuarios();
                 request.getSession().setAttribute("Artistas", artistas);
-
+                List<DtUsuario> clientes = wscli.listarClientes().getUsuarios();
+                request.getSession().setAttribute("Clientes", clientes);  
+                List<DtLista> listas = wscli.resultadosL("").getListas();
+                request.getSession().setAttribute("Listas", listas);
+                
+                
                 String claveCliente = null;
                 String nickCookie = null;
                 Cookie[] cookies = request.getCookies();
@@ -179,6 +173,28 @@ public class ServletGeneral extends HttpServlet {
                         response.sendRedirect("/EspotifyMovil/Vistas/IniciarSesion.jsp");
                     }
                 }
+            }
+                        
+            if (request.getParameter("listaalbumesg")!= null){
+                String nombre= request.getParameter("listaalbumesg");
+                List<DtAlbum> albumes = wsart.listarAlbumGenero(nombre).getAlbumes();
+                List<DtLista> listas = wsart.getListasGenero(nombre).getListas();
+                request.getSession().setAttribute("Albume", albumes);
+                request.getSession().setAttribute("Listas", listas);                
+            }
+            if (request.getParameter("listarlistapd")!= null){
+                String nLista = request.getParameter("listarlistapd");
+                nLista = nLista.trim();
+                DtListaPD aux = wscli.listaPD(nLista);
+                request.getSession().setAttribute("Lista", (DtLista)aux);
+            }
+
+            if (request.getParameter("listarlistap") != null) {
+                String nLista = request.getParameter("listarlistap");
+                String nick = request.getParameter("listarlistapnick");
+                nLista = nLista.trim();
+                DtListaP aux = wscli.listaP(nick, nLista);
+                request.getSession().setAttribute("Lista2", (DtLista)aux);
             }
             if (request.getParameter("listaralbumes") != null) {
                 String artista = request.getParameter("listaralbumes");
