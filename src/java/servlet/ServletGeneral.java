@@ -5,6 +5,7 @@
  */
 package servlet;
 
+import Clases.Configuraciones;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -43,7 +44,6 @@ import webservices.WSClientesService;
 import webservices.WSArchivos;
 import webservices.WSArchivosService;
 
-
 /**
  *
  * @author stephiRM
@@ -61,29 +61,19 @@ public class ServletGeneral extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-            response.setContentType("text/html;charset=UTF-8");
-            HttpSession sesion = request.getSession();
-            
-            
-            try{
-            Properties propiedades = new Properties();
-            String rutaConfWS = this.getClass().getClassLoader().getResource("").getPath();
-            rutaConfWS = rutaConfWS.replace("build/web/WEB-INF/classes/", "webservices.properties");
-            rutaConfWS = rutaConfWS.replace("%20", " ");
-            InputStream entrada = new FileInputStream(rutaConfWS);
-            propiedades.load(entrada);// cargamos el archivo de propiedades
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        HttpSession sesion = request.getSession();
 
-            URL url = new URL("http://" + propiedades.getProperty("ipServidor") + ":" + propiedades.getProperty("puertoWSArt") + "/" + propiedades.getProperty("nombreWSArt"));
-            WSArtistasService wsarts = new WSArtistasService(url, new QName("http://WebServices/", "WSArtistasService"));
+        try {
+            Configuraciones conf = new Configuraciones();
+            WSArtistasService wsarts = new WSArtistasService(conf.getUrlWSArtistas(), new QName("http://WebServices/", "WSArtistasService"));
             WSArtistas wsart = wsarts.getWSArtistasPort();
 
-            url = new URL("http://" + propiedades.getProperty("ipServidor") + ":" + propiedades.getProperty("puertoWSCli") + "/" + propiedades.getProperty("nombreWSCli"));
-            WSClientesService wsclis = new WSClientesService(url, new QName("http://WebServices/", "WSClientesService"));
+            WSClientesService wsclis = new WSClientesService(conf.getUrlWSClientes(), new QName("http://WebServices/", "WSClientesService"));
             WSClientes wscli = wsclis.getWSClientesPort();
-            
-            url = new URL("http://" + propiedades.getProperty("ipServidor") + ":" + propiedades.getProperty("puertoWSArch") + "/" + propiedades.getProperty("nombreWSArch"));
-            WSArchivosService wsarchs = new WSArchivosService(url);
+
+            WSArchivosService wsarchs = new WSArchivosService(conf.getUrlWSArchivos());
             WSArchivos wsarch = wsarchs.getWSArchivosPort();
 
             if (request.getParameter("Join") != null) {
@@ -108,10 +98,9 @@ public class ServletGeneral extends HttpServlet {
                         sesion.removeAttribute("error");
                         sesion.setAttribute("Mensaje", "Bienvenido/a " + dt.getNombre() + " " + dt.getApellido());
 
-                        
-                            //Verificar y actualizar si las suscripciones del cliente que estaban vigentes se vencieron
+                        //Verificar y actualizar si las suscripciones del cliente que estaban vigentes se vencieron
                         wscli.actualizarVigenciaSuscripciones(dt.getNickname());
-                        
+
                         response.sendRedirect("ServletGeneral?Inicio=true");
                     } else {
                         if (!(wscli.verificarDatosCli(nickname, nickname) && wsart.verificarDatosArt(nickname, nickname))) {
@@ -121,11 +110,12 @@ public class ServletGeneral extends HttpServlet {
                         }
                         response.sendRedirect("/EspotifyMovil/Vistas/IniciarSesion.jsp");
                     }
-                }if(dt instanceof DtArtista){
+                }
+                if (dt instanceof DtArtista) {
                     sesion.setAttribute("error", "No pueden ingresar artistas");
                     response.sendRedirect("/EspotifyMovil/Vistas/IniciarSesion.jsp");
                 }
-                if (dt==null){
+                if (dt == null) {
                     sesion.setAttribute("error", "Usuario y contraseña incorrectos");
                     response.sendRedirect("/EspotifyMovil/Vistas/IniciarSesion.jsp");
                 }
@@ -133,15 +123,15 @@ public class ServletGeneral extends HttpServlet {
             if (request.getParameter("CerrarSesion") != null) {
                 request.getSession().removeAttribute("Usuario");
                 Cookie[] cookies = request.getCookies();
-                
-                
-                for(Cookie c: cookies){
-                    if(c.getName().equals("Join")){
+                cookies = request.getCookies();
+
+                for (Cookie c : cookies) {
+                    if (c.getName().equals("Join")) {
                         c.setMaxAge(0); //se elimina el cookie
                         response.addCookie(c);
                     }
                 }
-                
+
                 response.sendRedirect("/EspotifyMovil/Vistas/IniciarSesion.jsp");
             }
             if (request.getParameter("listaalbumesg")!= null){
@@ -162,12 +152,12 @@ public class ServletGeneral extends HttpServlet {
                 request.getSession().setAttribute("Generos", generos);
                 List<DtUsuario> artistas = wsart.listarArtistas().getUsuarios();
                 request.getSession().setAttribute("Artistas", artistas);
-                
+
                 String claveCliente = null;
                 String nickCookie = null;
                 Cookie[] cookies = request.getCookies();
-                
-                if(cookies!=null){
+
+                if (cookies != null) {
                     for (Cookie c : cookies) {
                         if (c.getName().equals("Join")) {
                             nickCookie = c.getValue();
@@ -175,20 +165,18 @@ public class ServletGeneral extends HttpServlet {
                         }
                     }
                 }
-                
-                if(claveCliente!=null){
-                    DtCliente dt=wscli.verPerfilCliente(claveCliente);
+
+                if (claveCliente != null) {
+                    DtCliente dt = wscli.verPerfilCliente(claveCliente);
                     wscli.actualizarVigenciaSuscripciones(dt.getNickname());
-                    request.getSession().setAttribute("Usuario",dt);
+                    request.getSession().setAttribute("Usuario", dt);
                     sesion.setAttribute("Mensaje", "Bienvenido/a " + dt.getNombre() + " " + dt.getApellido());
                     response.sendRedirect("/EspotifyMovil/Vistas/index.jsp");
-                }
-                else{
-                    if (sesion.getAttribute("Usuario")!=null){
+                } else {
+                    if (sesion.getAttribute("Usuario") != null) {
                         response.sendRedirect("/EspotifyMovil/Vistas/index.jsp");
-                    }
-                    else{
-                        response.sendRedirect("/EspotifyMovil/Vistas/IniciarSesion.jsp"); 
+                    } else {
+                        response.sendRedirect("/EspotifyMovil/Vistas/IniciarSesion.jsp");
                     }
                 }
             }
@@ -196,33 +184,33 @@ public class ServletGeneral extends HttpServlet {
                 String artista = request.getParameter("listaralbumes");
                 List<DtUsuario> artistas = (List<DtUsuario>) request.getSession().getAttribute("Artistas");
                 DtArtista dt = null;
-                for (int i=0;i<artistas.size();i++){
-                    if (artistas.get(i).getNickname().equals(artista)){
+                for (int i = 0; i < artistas.size(); i++) {
+                    if (artistas.get(i).getNickname().equals(artista)) {
                         dt = (DtArtista) artistas.get(i);
                     }
                 }
-                if (dt!=null){
+                if (dt != null) {
                     List<DtAlbum> albumes = dt.getAlbumes();
                     request.getSession().setAttribute("Albumes", albumes);
                     request.getSession().setAttribute("PerfilArt", dt);
                 }
             }
-            if (request.getParameter("consultaalbum") != null){
+            if (request.getParameter("consultaalbum") != null) {
                 String nomalbum = request.getParameter("consultaalbum");
                 DtArtista dt = (DtArtista) sesion.getAttribute("PerfilArt");
                 DtAlbum dta = null;
                 List<DtAlbum> listaalbumes = dt.getAlbumes();
-                for (int i=0;i<listaalbumes.size();i++){
-                    if (listaalbumes.get(i).getNombre().equals(nomalbum)){
+                for (int i = 0; i < listaalbumes.size(); i++) {
+                    if (listaalbumes.get(i).getNombre().equals(nomalbum)) {
                         dta = (DtAlbum) listaalbumes.get(i);
                     }
                 }
-                if (dta!=null){
+                if (dta != null) {
                     sesion.setAttribute("veralbum", dta);
                 }
             }
-            
-            if (request.getParameter("tipo")!= null) {
+
+            if (request.getParameter("tipo") != null) {
                 String tipoArchivo = request.getParameter("tipo");
                 if (tipoArchivo.equals("audio")) {
                     try {
@@ -260,7 +248,6 @@ public class ServletGeneral extends HttpServlet {
                     }
                 }
             }
-            
 
         } catch (WebServiceException ex) {
            response.sendRedirect("/EspotifyMovil/Vistas/Error.html");
