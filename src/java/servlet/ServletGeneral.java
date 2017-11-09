@@ -5,12 +5,15 @@
  */
 package servlet;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -81,6 +84,9 @@ public class ServletGeneral extends HttpServlet {
             url = new URL("http://" + propiedades.getProperty("ipServidor") + ":" + propiedades.getProperty("puertoWSArch") + "/" + propiedades.getProperty("nombreWSArch"));
             WSArchivosService wsarchs = new WSArchivosService(url);
             WSArchivos wsarch = wsarchs.getWSArchivosPort();
+            
+            request.getSession().setAttribute("WSArtistas", wsart);
+            request.getSession().setAttribute("WSClientes", wscli);
 
             if (request.getParameter("Join") != null) {
                 String nickname = request.getParameter("Join");
@@ -139,6 +145,53 @@ public class ServletGeneral extends HttpServlet {
                 }
                 
                 response.sendRedirect("/EspotifyMovil/Vistas/IniciarSesion.jsp");
+            }
+            
+            if (request.getParameter("descargar") != null) {
+//                if (tipoArchivo.equals("audio")) {
+                    try {
+                        DtUsuario dt = (DtUsuario) request.getSession().getAttribute("Usuario");
+                        if (dt != null && dt instanceof DtCliente && wscli.suscripcionVigente(dt.getNickname())) {
+                            String ruta = request.getParameter("descargar");
+                            String nomTema = request.getParameter("tema");
+                            String nomAlbum = request.getParameter("album");
+                            String nickArtista = request.getParameter("artista");
+                            DtArtista dtArt = wsart.elegirArtista(nickArtista);
+                            String nomDescarga = dtArt.getNombre()+" "+dtArt.getApellido()+" - "+nomTema+".mp3";
+                            
+                            response.setContentType("audio/mpeg");
+                            response.addHeader("Content-Disposition", "attachment; filename=" +"\""+nomDescarga+"\""); //indica que es un archivo para descargar
+                            //"\""+nomDescarga+"\"" --> "Artista - Tema.mp3"
+                            
+                            byte[] audio = wsarch.cargarArchivo(ruta).getByteArray();
+
+                            response.setContentType("audio/mpeg");
+                            response.setContentLength((int) audio.length);
+
+                            try (OutputStream out = response.getOutputStream()) {
+                                out.write(audio);
+                                out.flush();
+                            }catch(IOException ex){
+                                //Si salta la excepcion el usuario cancelo la descarga
+                                request.getSession().setAttribute("Mensaje", "cancelo la descarga");
+                            }
+
+                            //Poner la funcion en webservice aertistas
+                            wsart.nuevaDescargaTema(nickArtista, nomAlbum, nomTema);
+                        } else {
+                            if (dt == null) {
+                                request.getSession().setAttribute("Mensaje", "Inicie sesión");
+                            } else if (dt instanceof DtArtista) {
+                                request.getSession().setAttribute("Mensaje", "Los artistas no pueden descargar temas");
+                            } else {
+                                request.getSession().setAttribute("Mensaje", "No tiene suscripción vigente");
+                            }
+                            response.sendRedirect("ServletGeneral?Inicio=true");
+                            //response.getWriter().write("ERROR : " + ex.getMessage());
+                        }
+                    } catch (IOException_Exception ex) {
+                        Logger.getLogger(ServletGeneral.class.getName()).log(Level.SEVERE, null, ex);
+                    }
             }
 
             if (request.getParameter("Inicio") != null) {
@@ -204,6 +257,48 @@ public class ServletGeneral extends HttpServlet {
                 if (dta!=null){
                     sesion.setAttribute("veralbum", dta);
                 }
+            }
+            if (request.getParameter("reproducirAlbum") != null) {
+                String album = request.getParameter("reproducirAlbum");
+                String artista = request.getParameter("artista");
+                String temaSeleccionado = request.getParameter("tema");
+                //            response.getWriter().write(temaSeleccionado);
+                List<DtTema> temas = wsarch.reproducirAlbum(artista, album).getTemas();
+                request.getSession().setAttribute("temasAReproducir", temas);
+                //Si es el rquest que se envia al seleccionar un tema
+                for (DtTema tema : temas) {
+                    if (tema.getNombre().equals(temaSeleccionado)) {
+                        request.getSession().setAttribute("reproducirTema", tema);
+                        break;
+                    }
+                } 
+            }
+            
+            if (request.getParameter("nuevareproduccion") != null) {
+    //            response.getWriter().write("nuevadescarga");
+                String artista = request.getParameter("artista");
+                String album = request.getParameter("album");
+                String tema = request.getParameter("tema");
+                List<DtUsuario> artistas = (List<DtUsuario>) request.getSession().getAttribute("Artistas");
+                DtArtista dt = null;
+                for (int i=0;i<artistas.size();i++){
+                    if (artistas.get(i).getNickname().equals(artista)){
+                        dt = (DtArtista) artistas.get(i);
+                        for (int j=0;j<dt.getAlbumes().size();j++){
+                            if (dt.getAlbumes().get(j).getNombre().equals(album)){
+                                for (int h=0;h<dt.getAlbumes().get(j).getTemas().size();h++){
+                                    if (dt.getAlbumes().get(j).getTemas().get(h).getNombre().equals(tema)){
+                                        DtTema dtt = dt.getAlbumes().get(j).getTemas().get(h);
+                                        dtt.setCantReproduccion(dtt.getCantReproduccion()+1);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                //Poner la funcion en webservice aertistas
+                wsart.nuevaReproduccionTema(artista, album, tema);
+                //Redirecciona a la pagina indicada 
             }
             
             if (request.getParameter("tipo")!= null) {
