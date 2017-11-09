@@ -37,7 +37,7 @@
                     <ul class="nav navbar-nav">
                         <li><a id="btngeneros" href="#">Géneros</a></li>
                         <li><a id="btnartistas" href="#">Artistas</a></li> 
-                        <li><a href="#">Listas de Reproducción</a></li> 
+                        <li><a id="btnlistas" href="#">Listas de Reproducción</a></li> 
                         <li><a href="/EspotifyMovil/ServletGeneral?CerrarSesion=true">Cerrar sesión</a></li> 
                     </ul>
                 </div>
@@ -47,6 +47,7 @@
             <div class="col-md-4 text-center">
                 <div id="listaArtGen" class="row">
                     <jsp:include page="listaArtistas.jsp" />  <%-- Importar la cabecera desde otro archivo .jsp --%>
+
                 </div>
             </div>
         <script src="../Javascript/jquery.min.js"></script>

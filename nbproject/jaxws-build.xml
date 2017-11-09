@@ -60,7 +60,7 @@
     </target>
     <target name="wsimport-client-wsarchivos" depends="wsimport-init">
         <mkdir dir="${build.generated.dir}/jax-wsCache/wsarchivos"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/wsarchivos" destdir="${build.generated.dir}/jax-wsCache/wsarchivos" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/wsarchivos/wsdl/localhost_8089/wsarchivos.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:8089/wsarchivos?wsdl" xnocompile="true" xendorsed="true">
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/wsarchivos" destdir="${build.generated.dir}/jax-wsCache/wsarchivos" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/wsarchivos/wsdl/localhost_8089/wsarchivos.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:8089/wsarchivos?WSDL" xnocompile="true" xendorsed="true">
             <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/wsarchivos/wsdl/localhost_8089/wsarchivos.wsdl"/>
             <produces dir="${build.generated.dir}/jax-wsCache/wsarchivos"/>
         </wsimport>
