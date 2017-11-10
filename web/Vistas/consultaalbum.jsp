@@ -56,7 +56,7 @@
         <h4 style="color: white">Géneros:</h4>
         <p style="color:white" >
         <%for (String gen: generos){%>
-        - <a style="color: #00ff66" ><%=gen%> </a> 
+        - <a style="color: #00ff66" onclick="listaalbumesg('<%=gen%>')" ><%=gen%> </a> 
         <%}%> </p>
         </div>
             <div class="container">

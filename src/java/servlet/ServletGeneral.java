@@ -199,7 +199,6 @@ public class ServletGeneral extends HttpServlet {
                 List<DtLista> listas = wscli.resultadosL("").getListas();
                 request.getSession().setAttribute("Listas", listas);
                 
-                
                 String claveCliente = null;
                 String nickCookie = null;
                 Cookie[] cookies = request.getCookies();
@@ -248,6 +247,8 @@ public class ServletGeneral extends HttpServlet {
                 nLista = nLista.trim();
                 DtListaP aux = wscli.listaP(nick, nLista);
                 request.getSession().setAttribute("Lista2", (DtLista)aux);
+                DtCliente dtc = wscli.verPerfilCliente(nick);
+                request.getSession().setAttribute("nombrecreador", dtc.getNombre()+" "+dtc.getApellido());
             }
             if (request.getParameter("listaralbumes") != null) {
                 String artista = request.getParameter("listaralbumes");
@@ -266,7 +267,14 @@ public class ServletGeneral extends HttpServlet {
             }
             if (request.getParameter("consultaalbum") != null) {
                 String nomalbum = request.getParameter("consultaalbum");
-                DtArtista dt = (DtArtista) sesion.getAttribute("PerfilArt");
+                String nomart = request.getParameter("nomart");
+                DtArtista dt = null;
+                List<DtUsuario> artistas = (List<DtUsuario>) sesion.getAttribute("Artistas");
+                for (int i=0;i<artistas.size();i++){
+                    if (artistas.get(i).getNickname().equals(nomart)){
+                        dt = (DtArtista) artistas.get(i);
+                    }
+                }
                 DtAlbum dta = null;
                 List<DtAlbum> listaalbumes = dt.getAlbumes();
                 for (int i = 0; i < listaalbumes.size(); i++) {
@@ -276,6 +284,7 @@ public class ServletGeneral extends HttpServlet {
                 }
                 if (dta != null) {
                     sesion.setAttribute("veralbum", dta);
+                    sesion.setAttribute("PerfilArt", dt);
                 }
             }
             if (request.getParameter("reproducirAlbum") != null) {

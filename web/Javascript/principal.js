@@ -109,8 +109,6 @@ function nuevaReproduccion (artista, album, tema) {
 
 function reproducirTema(tema, album, artista){
     //alert("reproducirtema");
-    var x = document.getElementById("cantrepr1").innerHTML;
-    alert(x);
     $.ajax({
         type : 'GET', //tipo de request
         url : '/EspotifyMovil/ServletGeneral',
@@ -149,7 +147,7 @@ function listaralbumes(nick){
                 listaralbumes: nick
             },
             success: function (data) { //en el success ponemos lo que queremos hacer cuando obtenemos la respuesta
-                document.getElementById("listaArtGen").innerHTML = "";
+                $("#listaArtGen").empty();
                 $('#listaArtGen').load('/EspotifyMovil/Vistas/listaalbumes.jsp');
             }
         });
@@ -163,6 +161,7 @@ function listaalbumesg(nombre){
                 listaalbumesg: nombre
             },
             success: function (data) { //en el success ponemos lo que queremos hacer cuando obtenemos la respuesta
+                $('#listaArtGen').empty();
                 $('#listaArtGen').load('/EspotifyMovil/Vistas/listaalbumesgen.jsp');
             }
         });
@@ -176,6 +175,7 @@ function listarlistapd(nombre){
                 listarlistapd: nombre
             },
             success: function (data) { //en el success ponemos lo que queremos hacer cuando obtenemos la respuesta
+                $("#listaArtGen").empty();
                 $('#listaArtGen').load('/EspotifyMovil/Vistas/VerInfoLista.jsp');
             }
         });
@@ -192,22 +192,24 @@ function listarlistap(nick,nombre){
 
             },
             success: function (data) { //en el success ponemos lo que queremos hacer cuando obtenemos la respuesta
+                $("#listaArtGen").empty();
                 $('#listaArtGen').load('/EspotifyMovil/Vistas/VerInfoLista2.jsp');
             }
         });
     }
 
-function consultaalbum(nomalbum){
+function consultaalbum(nomalbum,nomart){
 
         $.ajax({
             type: 'POST', //tipo de request
             url: '/EspotifyMovil/ServletGeneral',
             dataType: 'text', // tipo de dato esperado en la respuesta(text, json, etc.)
             data: {// Parametros que se pasan en el request
-                consultaalbum: nomalbum, 
+                consultaalbum: nomalbum,
+                nomart: nomart
             },
             success: function (data) { //en el success ponemos lo que queremos hacer cuando obtenemos la respuesta
-                document.getElementById("listaArtGen").innerHTML = "";
+                $("#listaArtGen").empty();
                 $('#listaArtGen').load('/EspotifyMovil/Vistas/consultaalbum.jsp');
             }
         });
@@ -248,7 +250,7 @@ $(document).ready(function () {
                 Inicio: true
             },
             success: function (data) { //en el success ponemos lo que queremos hacer cuando obtenemos la respuesta
-                document.getElementById("listaArtGen").innerHTML = "";
+                window.location.replace("/EspotifyMovil/Vistas/index.jsp");
                 $('#listaArtGen').load('/EspotifyMovil/Vistas/listaArtistas.jsp');
             }
         });
@@ -264,7 +266,7 @@ $(document).ready(function () {
                 Inicio: true
             },
             success: function (data) { //en el success ponemos lo que queremos hacer cuando obtenemos la respuesta
-                document.getElementById("listaArtGen").innerHTML = "";
+                $("#listaArtGen").empty();
                 $('#listaArtGen').load('/EspotifyMovil/Vistas/listaGeneros.jsp');
             }
         });
@@ -282,6 +284,7 @@ $(document).ready(function () {
                 
             },
             success: function (data) { //en el success ponemos lo que queremos hacer cuando obtenemos la respuesta
+                $("#listaArtGen").empty();
                 $('#listaArtGen').load('/EspotifyMovil/Vistas/listaListas.jsp');
             }
         });

@@ -26,6 +26,7 @@
             <%for(DtLista lp: listas){ 
             if(lp instanceof DtListaP){
                 DtListaP lpn = (DtListaP) lp;
+                if (!lpn.isPrivada()){
             %>            
             <div class="col-xs-6 col-md-4" style="margin-bottom: 10px;padding-bottom: 5px; padding-right: 5px; padding-left: 5px; height: 180px; width: 180px">
                            <a href="#" onclick="listarlistap('<%= lpn.getUsuario() %>','<%= lp.getNombre() %>');">               
@@ -37,14 +38,13 @@
                     <h4  class="img-text"  ><%=lp.getNombre() %></h4>                    
                 </a>  
             </div>
-            <%}}%>
+            <%}}}%>
             </div>
             <br>
             <h4 style="color: white; text-shadow: 0px 1px 4px white;">Listas Por Defecto</h4>
             <div class="row">
             <%for(DtLista lpd: listas){
-            if(lpd instanceof DtListaPD){    
-            %>
+            if(lpd instanceof DtListaPD){%>
             <div class="col-xs-6 col-md-4" style="margin-bottom: 10px;padding-bottom: 5px; padding-right: 5px; padding-left: 5px; height: 180px; width: 180px">
                           <a href=# onclick="listarlistapd('<%= lpd.getNombre() %>');">
                     <% if(lpd.getRutaImagen() == null){ %>
