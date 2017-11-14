@@ -36,7 +36,6 @@
         @media (min-width: 992px) {
             #datosalbum {
                 width:100%;
-                margin-left: 300px;
             }
         }
         .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
@@ -65,7 +64,7 @@
             <div class="container">
             <h4 style="color: white">Temas</h4>           
             <div id="mitabla">
-            <div class="table-responsive"  style="border-style: none">
+            <div style="border-style: none">
             <table class="table table-hover">
               <tbody>
                 <%for (DtTema dtt:temas){
@@ -79,22 +78,22 @@
                     <img  src="../Imagenes/play.png" id="0" style="width: 25px">
                   </td>
                   <%}else{%>
-                  <td>
+                  <td class="text-right">
                       <img class="hidden" src="../Imagenes/unavailable.png" style="width: 25px">
                       <a href="http://<%=dtt.getDireccion()%>" class="glyphicon glyphicon-new-window" onmouseup="nuevaReproduccion('<%= dtt.getNomartista() %>','<%= dtt.getNomalbum() %>', '<%= dtt.getNombre() %>');"></a>
                   </td>
                   <%}%>
                 <%if (dtt.getArchivo()!=null){%>
-                    <td onclick="hola(this,'<%=dtt.getNomartista()%>','<%=dtt.getNomalbum()%>','<%=dtt.getNombre()%>')">
-                    <marquee direction="left" scrollamount="2" scrolldelay="40" truespeed="40"><%=dtt.getNombre()%></marquee>
+                    <td  onclick="hola(this,'<%=dtt.getNomartista()%>','<%=dtt.getNomalbum()%>','<%=dtt.getNombre()%>')">
+                    <%=dtt.getNombre()%>
                     </td>
                 <%}else{%>
                 <td>
-                <marquee direction="left" scrollamount="2" scrolldelay="40" truespeed="40"><%=dtt.getNombre()%></marquee>
+                <%=dtt.getNombre()%>
                 </td>
                 <%}%>
                   <td><%=dtt.getDuracion()%></td>
-                  <td>
+                  <td class="text-right">
                     <a class="glyphicon glyphicon-info-sign"  data-popover-content="#<%= indice %>" data-toggle="popover" data-trigger="focus"  tabindex="0"></a>
                     <%if (dtt.getArchivo()!=null && (wscli.suscripcionVigente(dtu.getNickname())) ){%>
                         <a class="glyphicon glyphicon-download-alt" href="/EspotifyMovil/ServletGeneral?descargar=<%= dtt.getArchivo()%>&tema=<%= dtt.getNombre() %>&album=<%= dtt.getNomalbum() %>&artista=<%= dtt.getNomartista() %>"></a>

@@ -19,16 +19,16 @@
     </head>
     <body>
         <div class="container">
-            <h2 style="color: white; text-shadow: 0px 1px 4px white;"><%=dt.getNombre()+" "+dt.getApellido()%></h2>
-            <h4 style="color: white; text-shadow: 0px 1px 4px white;">Albumes</h4>
+            <h2 style="color: white; text-shadow: 0px 1px 4px white; cursor: pointer"><%=dt.getNombre()+" "+dt.getApellido()%></h2>
+            <h3 style="color: white; text-shadow: 0px 1px 4px white;">Álbumes</h3>
             <div class="row">
             <%for(DtAlbum al: albumes){ %>
-            <div class="col-xs-6 col-md-4" style="margin-bottom: 10px;padding-bottom: 5px; padding-right: 5px; padding-left: 5px; height: 180px; width: 180px">
-                <a href=# onclick="consultaalbum('<%=al.getNombre()%>','<%=al.getNombreArtista()%>')">
+            <div class="col-xs-6 col-sm-4 col-md-4 col-lg-3" style="margin-bottom: 0px;padding-bottom: 5px; padding-right: 5px; padding-left: 5px;">
+                <a onclick="consultaalbum('<%=al.getNombre()%>','<%=al.getNombreArtista()%>')">
                     <% if(al.getRutaImagen() == null){ %>
-                    <img src="../Imagenes/iconoMusica.jpg" alt="foto del usuario" class="img-responsive img-rounded" title="Album" style="margin-bottom: 4px; margin-right: 2px; height: 180px; width: 180px"><!--Cambiar por imagen del album-->
+                    <img src="../Imagenes/iconoMusica.jpg" alt="foto del usuario" class="imagen-responsive img-rounded" title="Album" style="margin-bottom: 4px; margin-right: 2px;"><!--Cambiar por imagen del album-->
                     <%}else{%>
-                    <img src="/EspotifyMovil/ServletGeneral?tipo=imagen&ruta=<%= al.getRutaImagen() %>" alt="foto del usuario" class="img-responsive img-rounded" title="Artista" style="margin-bottom: 4px; margin-right: 2px; height: 180px; width: 180px">
+                    <img src="/EspotifyMovil/ServletGeneral?tipo=imagen&ruta=<%= al.getRutaImagen() %>" alt="foto del usuario" class="imagen-responsive img-rounded" title="Artista" style="margin-bottom: 4px; margin-right: 2px;">
                     <%}%>
                     <!--<img src="/EspotifyWeb/Imagenes/iconoArtista.png" alt="foto del usuario" class="img-responsive imgAlbum" title="Artista">Cambiar por imagen del usuario-->
                     <!--<h4 class="img-text" onmouseover="artSeleccionado(this, true)" onmouseout="artSeleccionado(this, false)"></h4>-->

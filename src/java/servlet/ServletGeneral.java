@@ -231,8 +231,9 @@ public class ServletGeneral extends HttpServlet {
                 String nombre= request.getParameter("listaalbumesg");
                 List<DtAlbum> albumes = wsart.listarAlbumGenero(nombre).getAlbumes();
                 List<DtLista> listas = wsart.getListasGenero(nombre).getListas();
-                request.getSession().setAttribute("Albume", albumes);
-                request.getSession().setAttribute("Listas", listas);                
+                request.getSession().setAttribute("Albumes", albumes);
+                request.getSession().setAttribute("Listas", listas);     
+                request.getSession().setAttribute("Genero", nombre);
             }
             if (request.getParameter("listarlistapd")!= null){
                 String nLista = request.getParameter("listarlistapd");

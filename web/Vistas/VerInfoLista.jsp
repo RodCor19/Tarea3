@@ -52,7 +52,7 @@
         <div class="container">
         <h4 style="color: white">Temas</h4>           
         <div id="mitabla">
-            <div class="table-responsive"  style="border-style: none">
+            <div class=""  style="border-style: none">
             <table class="table table-hover">
               <tbody>
                 <%for (DtTema dtt:temas){
@@ -73,14 +73,15 @@
                   <%}%>
                 <%if (dtt.getArchivo()!=null){%>
                     <td onclick="hola(this,'<%=dtt.getNomartista()%>','<%=dtt.getNomalbum()%>','<%=dtt.getNombre()%>')">
-                    <marquee direction="left" scrollamount="2" scrolldelay="40" truespeed="40">
+                    <!--<marquee direction="left" scrollamount="2" scrolldelay="40" truespeed="40">-->
                     <%=dtt.getNombre()%>
-                    </marquee></td>
+                    <!--</marquee>-->
+                    </td>
                 <%}else{%>
                 <td>
-                <marquee direction="left" scrollamount="2" scrolldelay="40" truespeed="40">
+                <!--<marquee direction="left" scrollamount="2" scrolldelay="40" truespeed="40">-->
                 <%=dtt.getNombre()%>
-                </marquee>
+                <!--</marquee>-->
                 </td>
                 <%}%>
                   <td><%=dtt.getDuracion()%></td>
