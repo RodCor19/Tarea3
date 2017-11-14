@@ -13,6 +13,7 @@
 <%@page import="webservices.DtLista"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%if (request.getSession().getAttribute("Usuario")!=null){%>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -27,14 +28,27 @@
         String nom;
         %>
     </head>
+    <style>
+        .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+            color: black;
+        }
+                @media (min-width: 992px) {
+            #datoslista {
+                width:100%;
+                margin-left: 300px;
+            }
+        }
+    </style>
     <body>
-        <h4 style="color: white; text-shadow: 0px 1px 4px white;"><%=dt.getNombre()%></h4>
-        <% if(dtp.getRutaImagen() == null){ %>
-        <img src="../Imagenes/IconoLista.png" alt="foto del usuario" class="img-responsive img-rounded" title="Album" style="margin: auto; display: block; width: 60%;"><!--Cambiar por imagen del album-->
-        <%}else{%>
-        <img src="/EspotifyMovil/ServletGeneral?tipo=imagen&ruta=<%= dtp.getRutaImagen() %>" alt="foto del usuario" class="img-responsive img-rounded" title="Artista" style="margin: auto; display: block; width: 60%;">
-        <%}%>
-        <h4 style="color: white"><%=request.getSession().getAttribute("nombrecreador")%></h4>
+        <div id ="datoslista">
+            <h4 style="color: white; text-shadow: 0px 1px 4px white;"><%=dt.getNombre()%></h4>
+            <% if(dtp.getRutaImagen() == null){ %>
+            <img src="../Imagenes/IconoLista.png" alt="foto del usuario" class="img-responsive img-rounded" title="Album" style="margin: auto; display: block; width: 60%;"><!--Cambiar por imagen del album-->
+            <%}else{%>
+            <img src="/EspotifyMovil/ServletGeneral?tipo=imagen&ruta=<%= dtp.getRutaImagen() %>" alt="foto del usuario" class="img-responsive img-rounded" title="Artista" style="margin: auto; display: block; width: 60%;">
+            <%}%>
+            <h4 style="color: white"><%=request.getSession().getAttribute("nombrecreador")%></h4>
+        </div>
         <div class="container">
         <h4 style="color: white">Temas</h4>  
         <div id="mitabla">
@@ -57,22 +71,22 @@
                       <a href="http://<%=dtt.getDireccion()%>" class="glyphicon glyphicon-new-window" onmouseup="nuevaReproduccion('<%= dtt.getNomartista() %>','<%= dtt.getNomalbum() %>', '<%= dtt.getNombre() %>');"></a>
                   </td>
                   <%}%>
-                <%if (dtt.getArchivo()!=null){
-                    nom = dtt.getNombre();
-                    if (dtt.getNombre().length() > 27){
-                        nom = dtt.getNombre().substring(0,27)+"...";
-                    }%>
-                    <td onclick="hola(this,'<%=dtt.getNomartista()%>','<%=dtt.getNomalbum()%>','<%=dtt.getNombre()%>')"><%=nom%></td>
-                <%}else{
-                    nom = dtt.getNombre();
-                    if (dtt.getNombre().length() > 27){
-                        nom = dtt.getNombre().substring(0,27)+"...";
-                    }%>
-                <td><%=nom%></td>
+                <%if (dtt.getArchivo()!=null){%>
+                    <td onclick="hola(this,'<%=dtt.getNomartista()%>','<%=dtt.getNomalbum()%>','<%=dtt.getNombre()%>')">
+                    <marquee direction="left" scrollamount="2" scrolldelay="40" truespeed="40">
+                    <%=dtt.getNombre()%>
+                    </marquee>
+                    </td>
+                <%}else{%>
+                <td>
+                    <marquee direction="left" scrollamount="2" scrolldelay="40" truespeed="40">
+                    <%=dtt.getNombre()%>
+                    </marquee>
+                </td>
                 <%}%>
                   <td><%=dtt.getDuracion()%></td>
                   <td>
-                    <a class="glyphicon glyphicon-cog"  data-popover-content="#<%= indice %>" data-toggle="popover" data-trigger="focus"  tabindex="0"></a>
+                    <a class="glyphicon glyphicon-info-sign"  data-popover-content="#<%= indice %>" data-toggle="popover" data-trigger="focus"  tabindex="0"></a>
                     <%if (dtt.getArchivo()!=null && (wscli.suscripcionVigente(dtu.getNickname())) ){%>
                         <a class="glyphicon glyphicon-download-alt" href="/EspotifyMovil/ServletGeneral?descargar=<%= dtt.getArchivo()%>&tema=<%= dtt.getNombre() %>&album=<%= dtt.getNomalbum() %>&artista=<%= dtt.getNomartista() %>"></a>
                     <%}%>
@@ -122,3 +136,7 @@
         <script src="../Javascript/principal.js"></script>
     </body>
 </html>
+<%}else{%>
+<script>alert("Acceso Denegado");</script>
+<meta http-equiv="refresh" content="0; URL=/EspotifyMovil/Vistas/IniciarSesion.jsp">
+<%}%>

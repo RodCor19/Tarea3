@@ -71,7 +71,7 @@ public class ServletGeneral extends HttpServlet {
 
         try {
             Configuraciones conf = new Configuraciones();
-            WSArtistasService wsarts = new WSArtistasService(conf.getUrlWSArtistas(), new QName("http://WebServices/", "WSArtistasService"));
+            WSArtistasService wsarts = new WSArtistasService(conf.getUrlWSArtistas(),new QName("http://WebServices/", "WSArtistasService"));
             WSArtistas wsart = wsarts.getWSArtistasPort();
 
             WSClientesService wsclis = new WSClientesService(conf.getUrlWSClientes(), new QName("http://WebServices/", "WSClientesService"));
