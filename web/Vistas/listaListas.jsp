@@ -4,6 +4,7 @@
     Author     : ninoh
 --%>
 
+<%@page import="webservices.DtUsuario"%>
 <%@page import="webservices.DtListaPD"%>
 <%@page import="webservices.DtListaP"%>
 <%@page import="webservices.DtCliente"%>
@@ -12,6 +13,7 @@
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%if (request.getSession().getAttribute("Usuario")!=null){%>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -19,14 +21,15 @@
         <link rel="stylesheet" href="../CSS/estilos.css">
     </head>
     <body>
-        <%   List<DtListaP> listas = (List<DtListaP>) session.getAttribute("Listas");   %>
+        <%   List<DtListaP> listas = (List<DtListaP>) session.getAttribute("Listas");
+            DtUsuario dtu = (DtUsuario) request.getSession().getAttribute("Usuario");%>
         <div class="container">
             <h4 style="color: white; text-shadow: 0px 1px 4px white;">Listas Particulares</h4>
             <div class="row">
-            <%for(DtLista lp: listas){ 
+            <%for(DtLista lp: listas){
             if(lp instanceof DtListaP){
                 DtListaP lpn = (DtListaP) lp;
-                if (!lpn.isPrivada()){
+                if (!lpn.isPrivada() || (lpn.isPrivada() && lpn.getUsuario().equals(dtu.getNickname()))){
             %>            
             <div class="col-xs-6 col-md-4" style="margin-bottom: 10px;padding-bottom: 5px; padding-right: 5px; padding-left: 5px; height: 180px; width: 180px">
                            <a href="#" onclick="listarlistap('<%= lpn.getUsuario() %>','<%= lp.getNombre() %>');">               
@@ -62,3 +65,7 @@
     <script src="../Javascript/principal.js"></script>
     </body>
 </html>
+<%}else{%>
+<script>alert("Acceso Denegado");</script>
+<meta http-equiv="refresh" content="0; URL=/EspotifyMovil/Vistas/IniciarSesion.jsp">
+<%}%>

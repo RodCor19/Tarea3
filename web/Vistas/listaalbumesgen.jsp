@@ -9,6 +9,7 @@
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%if (request.getSession().getAttribute("Usuario")!=null){%>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -55,3 +56,7 @@
     <script src="../Javascript/principal.js"></script>
     </body>
 </html>
+<%}else{%>
+<script>alert("Acceso Denegado");</script>
+<meta http-equiv="refresh" content="0; URL=/EspotifyMovil/Vistas/IniciarSesion.jsp">
+<%}%>

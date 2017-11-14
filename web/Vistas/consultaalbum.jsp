@@ -14,6 +14,7 @@
 <%@page import="webservices.DtArtista"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%if (request.getSession().getAttribute("Usuario")!=null){%>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -83,22 +84,18 @@
                       <a href="http://<%=dtt.getDireccion()%>" class="glyphicon glyphicon-new-window" onmouseup="nuevaReproduccion('<%= dtt.getNomartista() %>','<%= dtt.getNomalbum() %>', '<%= dtt.getNombre() %>');"></a>
                   </td>
                   <%}%>
-                <%if (dtt.getArchivo()!=null){
-                    nom = dtt.getNombre();
-                    if (dtt.getNombre().length() > 27){
-                        nom = dtt.getNombre().substring(0,27)+"...";
-                    }%>
-                    <td onclick="hola(this,'<%=dtt.getNomartista()%>','<%=dtt.getNomalbum()%>','<%=dtt.getNombre()%>')"><%=nom%></td>
-                <%}else{
-                    nom = dtt.getNombre();
-                    if (dtt.getNombre().length() > 27){
-                        nom = dtt.getNombre().substring(0,27)+"...";
-                    }%>
-                <td><%=nom%></td>
+                <%if (dtt.getArchivo()!=null){%>
+                    <td onclick="hola(this,'<%=dtt.getNomartista()%>','<%=dtt.getNomalbum()%>','<%=dtt.getNombre()%>')">
+                    <marquee direction="left" scrollamount="2" scrolldelay="40" truespeed="40"><%=dtt.getNombre()%></marquee>
+                    </td>
+                <%}else{%>
+                <td>
+                <marquee direction="left" scrollamount="2" scrolldelay="40" truespeed="40"><%=dtt.getNombre()%></marquee>
+                </td>
                 <%}%>
                   <td><%=dtt.getDuracion()%></td>
                   <td>
-                    <a class="glyphicon glyphicon-cog"  data-popover-content="#<%= indice %>" data-toggle="popover" data-trigger="focus"  tabindex="0"></a>
+                    <a class="glyphicon glyphicon-info-sign"  data-popover-content="#<%= indice %>" data-toggle="popover" data-trigger="focus"  tabindex="0"></a>
                     <%if (dtt.getArchivo()!=null && (wscli.suscripcionVigente(dtu.getNickname())) ){%>
                         <a class="glyphicon glyphicon-download-alt" href="/EspotifyMovil/ServletGeneral?descargar=<%= dtt.getArchivo()%>&tema=<%= dtt.getNombre() %>&album=<%= dtt.getNomalbum() %>&artista=<%= dtt.getNomartista() %>"></a>
                     <%}%>
@@ -150,3 +147,7 @@
         <script src="../Javascript/principal.js"></script>-->
     </body>
 </html>
+<%}else{%>
+<script>alert("Acceso Denegado");</script>
+<meta http-equiv="refresh" content="0; URL=/EspotifyMovil/Vistas/IniciarSesion.jsp">
+<%}%>

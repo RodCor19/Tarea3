@@ -9,6 +9,7 @@
 <%@page import="webservices.DtGenero"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%if (request.getSession().getAttribute("Usuario")!=null){%>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -25,9 +26,9 @@
             <a href="#" onclick="listaalbumesg('<%=gen.getNombre() %>')">                
                 <%String nomgen = gen.getNombre();
                 if (nomgen.equals("Rock") || nomgen.equals("Pop") || nomgen.equals("Clásica") || nomgen.equals("Balada") || nomgen.equals("Disco") || nomgen.equals("Rock Clásico") || nomgen.equals("Electropop")){%>
-                    <img src="/EspotifyWeb/Imagenes/<%=nomgen%>.jpg" alt="foto del genero" class="img-responsive img-rounded" title="Generos" style="margin-bottom: 4px; margin-right: 2px; height: 180px; width: 180px"><!--Cambiar por imagen del usuario-->
+                    <img src="/EspotifyMovil/Imagenes/<%=nomgen%>.jpg" alt="foto del genero" class="img-responsive img-rounded" title="Generos" style="margin-bottom: 4px; margin-right: 2px; height: 180px; width: 180px"><!--Cambiar por imagen del usuario-->
                 <%}else{%>
-                    <img src="/EspotifyWeb/Imagenes/iconoGenero.jpg" alt="foto del genero" class="img-responsive img-rounded" title="Generos" style="margin-bottom: 4px; margin-right: 2px; height: 180px; width: 180px" ><!--Cambiar por imagen del usuario-->
+                    <img src="/EspotifyMovil/Imagenes/iconoGenero.jpg" alt="foto del genero" class="img-responsive img-rounded" title="Generos" style="margin-bottom: 4px; margin-right: 2px; height: 180px; width: 180px" ><!--Cambiar por imagen del usuario-->
                 <%}%>
                 <!--<img src="../Imagenes/iconoGenero.jpg" alt="icono" class="img-responsive img-rounded" title="Genero" style="margin-bottom: 4px; margin-right: 2px; height: 180px; width: 180px">Cambiar por imagen del usuario-->                    
                     <h4  class="img-text"  ><%=gen.getNombre() %></h4>                    
@@ -39,3 +40,7 @@
     <script src="../Javascript/principal.js"></script>
     </body>
 </html>
+<%}else{%>
+<script>alert("Acceso Denegado");</script>
+<meta http-equiv="refresh" content="0; URL=/EspotifyMovil/Vistas/IniciarSesion.jsp">
+<%}%>

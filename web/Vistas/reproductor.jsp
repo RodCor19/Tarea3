@@ -9,6 +9,7 @@
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%if (request.getSession().getAttribute("Usuario")!=null){%>
 <%  //DtAlbum album = (DtAlbum) session.getAttribute("Album");
     List<DtTema> temas = (List<DtTema>) session.getAttribute("temasAReproducir");
     Collections.reverse(temas);
@@ -80,5 +81,8 @@
         </div>
     </div> 
     <script>$('.reproducirTema').click(); //reproducir el tema seleccionaro, click</script>
-
+<%}else{%>
+<script>alert("Acceso Denegado");</script>
+<meta http-equiv="refresh" content="0; URL=/EspotifyMovil/Vistas/IniciarSesion.jsp">
+<%}%>
 
