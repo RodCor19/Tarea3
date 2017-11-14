@@ -44,8 +44,8 @@
                 
             </div>
         </nav>
-            <div class="col-md-4 text-center">
-                <div id="listaArtGen" class="row">
+            <div class="container-fluid">
+                <div id="listaArtGen" class="row text-center" style="padding-left: 5px; padding-right: 5px;">
                     <jsp:include page="listaArtistas.jsp" />  <%-- Importar la cabecera desde otro archivo .jsp --%>
 
                 </div>

@@ -297,3 +297,33 @@ textarea{
 .popover-content {
     padding: 0px;
 }
+
+/* por defecto, para col-xs*/
+.imagen-responsive{
+    width: 180px; 
+    height: 180px;
+}
+
+/* Para col-sm */
+@media (min-width: 768px) {
+    .imagen-responsive{
+        width: 250px; 
+        height: 250px;
+    }
+}
+
+/* Para col-md */
+@media (min-width: 992px) {
+    .imagen-responsive{
+        width: 300px; 
+        height: 300px;
+    }
+}
+
+/* Para col-md */
+@media (min-width: 1200px) {
+    .imagen-responsive{
+        width: 300px; 
+        height: 300px;
+    }
+}

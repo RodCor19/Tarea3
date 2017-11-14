@@ -59,7 +59,7 @@
         <h4 style="color: white">Géneros:</h4>
         <p style="color:white" >
         <%for (String gen: generos){%>
-        - <a style="color: #00ff66" onclick="listaalbumesg('<%=gen%>')" ><%=gen%> </a> 
+        <a class="btn btn-success" style="background-color: #1ED760" onclick="listaalbumesg('<%=gen%>')" ><b><%=gen%></b></a> 
         <%}%> </p>
         </div>
             <div class="container">
@@ -121,7 +121,7 @@
             </table>
             </div>
             </div>
-              <div id="divReproductor" >
+              <div id="divReproductor" hidden="">
                 <% if (session.getAttribute("temasAReproducir") != null) { %>
                     <jsp:include page="reproductor.jsp" /> <%-- Importar codigo desde otro archivo .jsp --%>
                 <%}%>
