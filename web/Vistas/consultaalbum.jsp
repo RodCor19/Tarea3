@@ -39,7 +39,9 @@
             }
         }
         .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
-            color: black;
+            color: white;
+            background-color: #3e3d3d;
+            cursor: pointer;
         }
         </style>
     </head>
@@ -109,9 +111,9 @@
                     <div class="popover-body" >
                         <ul style="padding: 0px; margin: 0px;">
                             <%--<li class="list-group-item"><%=tem.getNombre()%></li>--%>
-                            <li class="list-group-item"style="border-color: white; color: white; background-color: black; "><b>Orden: <br> <%=dtt.getOrden()%></b></li>
+                            <li class="list-group-item" style="border-color: white; color: white; background-color: black; "><b>Orden: <br> <%=dtt.getOrden()%></b></li>
                             <li class="list-group-item" style="border-color: white; color: white; background-color: black;"><b >Reproducciones: <br><%=dtt.getCantReproduccion()%></b></li>
-                            <li class="list-group-item"style="border-color: white; color: white; background-color: black;"><b>Descargas: <br><%=dtt.getCantDescarga()%></b></li>
+                            <li class="list-group-item" style="border-color: white; color: white; background-color: black;"><b>Descargas: <br><%=dtt.getCantDescarga()%></b></li>
                         </ul>
                     </div>
                 </div>
@@ -122,7 +124,7 @@
             </table>
             </div>
             </div>
-              <div id="divReproductor" class="hidden">
+              <div id="divReproductor" >
                 <% if (session.getAttribute("temasAReproducir") != null) { %>
                     <jsp:include page="reproductor.jsp" /> <%-- Importar codigo desde otro archivo .jsp --%>
                 <%}%>
