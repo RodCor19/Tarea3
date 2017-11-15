@@ -24,7 +24,7 @@
             <div class="row">
             <%for(DtAlbum al: albumes){ %>
             <div class="col-xs-6 col-sm-4 col-md-4 col-lg-3" style="margin-bottom: 0px;padding-bottom: 5px; padding-right: 5px; padding-left: 5px;">
-                <a onclick="consultaalbum('<%=al.getNombre()%>','<%=al.getNombreArtista()%>')">
+                <a onclick="consultaalbum('<%=al.getNombre()%>','<%=al.getNombreArtista()%>')" style="cursor: pointer">
                     <% if(al.getRutaImagen() == null){ %>
                     <img src="../Imagenes/iconoMusica.jpg" alt="foto del usuario" class="imagen-responsive img-rounded" title="Album" style="margin-bottom: 4px; margin-right: 2px;"><!--Cambiar por imagen del album-->
                     <%}else{%>
