@@ -23,16 +23,16 @@
     <body>-->
         <%   List<DtListaP> listas = (List<DtListaP>) session.getAttribute("Listas");
             DtUsuario dtu = (DtUsuario) request.getSession().getAttribute("Usuario");%>
-        <!--<div class="container">-->
+        <div class="container">
             <h4 style="color: white; text-shadow: 0px 1px 4px white;">Listas Particulares</h4>
-            <!--<div class="row">-->
+            <div class="row">
             <%for(DtLista lp: listas){
             if(lp instanceof DtListaP){
                 DtListaP lpn = (DtListaP) lp;
                 if (!lpn.isPrivada() || (lpn.isPrivada() && lpn.getUsuario().equals(dtu.getNickname()))){
             %>            
             <div class="col-xs-6 col-sm-4 col-md-4 col-lg-3" style="margin-bottom: 0px;padding-bottom: 5px; padding-right: 5px; padding-left: 5px;">
-                           <a href="#" onclick="listarlistap('<%= lpn.getUsuario() %>','<%= lp.getNombre() %>');">               
+                <a onclick="listarlistap('<%= lpn.getUsuario() %>','<%= lp.getNombre() %>');" style="cursor: pointer">               
                     <% if (lp.getRutaImagen() == null) { %>
                     <img src="../Imagenes/IconoLista.png" alt="imagen" class="imagen-responsive img-rounded" title="Lista" style="margin-bottom: 4px; margin-right: 2px;">
                     <%} else{%>
@@ -42,13 +42,13 @@
                 </a>  
             </div>
             <%}}}%>
-            <!--</div>-->
+            </div>
             <h4 style="color: white; text-shadow: 0px 1px 4px white; width: 100%; padding-top: 10px;">Listas Por Defecto</h4>
-            <!--<div class="row">-->
+            <div class="row">
             <%for(DtLista lpd: listas){
             if(lpd instanceof DtListaPD){%>
             <div class="col-xs-6 col-sm-4 col-md-4 col-lg-3" style="margin-bottom: 0px;padding-bottom: 5px; padding-right: 5px; padding-left: 5px;">
-                          <a onclick="listarlistapd('<%= lpd.getNombre() %>');">
+                <a onclick="listarlistapd('<%= lpd.getNombre() %>');" style="cursor: pointer">
                     <% if(lpd.getRutaImagen() == null){ %>
                     <img src="../Imagenes/IconoLista.png" alt="imagen" class="imagen-responsive img-rounded" title="Lista" style="margin-bottom: 4px; margin-right: 2px;">
                     <%}else{%>
@@ -59,9 +59,9 @@
                 </a>  
             </div>
             <%}}%>
-            <!--</div>-->
-<!--        </div>
-    <script src="../Javascript/principal.js"></script>
+            </div>
+        </div>
+    <!--<script src="../Javascript/principal.js"></script>
     </body>-->
 </html>
 <%}else{%>

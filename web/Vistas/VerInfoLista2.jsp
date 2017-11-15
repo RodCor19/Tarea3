@@ -35,22 +35,23 @@
                 @media (min-width: 992px) {
             #datoslista {
                 width:100%;
-                margin-left: 300px;
+                /*margin-left: 300px;*/
             }
         }
     </style>
     <body>
         <div id ="datoslista">
-            <h4 style="color: white; text-shadow: 0px 1px 4px white;"><%=dt.getNombre()%></h4>
+            <h3 style="color: white; text-shadow: 0px 1px 4px white;"><%=dt.getNombre()%></h3>
             <% if(dtp.getRutaImagen() == null){ %>
             <img src="../Imagenes/IconoLista.png" alt="foto del usuario" class="img-responsive img-rounded" title="Album" style="margin: auto; display: block; width: 60%;"><!--Cambiar por imagen del album-->
             <%}else{%>
             <img src="/EspotifyMovil/ServletGeneral?tipo=imagen&ruta=<%= dtp.getRutaImagen() %>" alt="foto del usuario" class="img-responsive img-rounded" title="Artista" style="margin: auto; display: block; width: 60%;">
             <%}%>
-            <h4 style="color: white"><%=request.getSession().getAttribute("nombrecreador")%></h4>
+            <h4 style="color: white">Creador: <%=request.getSession().getAttribute("nombrecreador")%></h4>
         </div>
         <div class="container">
-        <h4 style="color: white">Temas</h4>  
+        <!--<h4 style="color: white">Temas</h4>-->  
+        <br>
         <div id="mitabla">
             <div class=""  style="border-style: none">
             <table class="table table-hover">
@@ -85,7 +86,7 @@
                 </td>
                 <%}%>
                   <td><%=dtt.getDuracion()%></td>
-                  <td>
+                  <td class="text-right">
                     <a class="glyphicon glyphicon-info-sign"  data-popover-content="#<%= indice %>" data-toggle="popover" data-trigger="focus"  tabindex="0"></a>
                     <%if (dtt.getArchivo()!=null && (wscli.suscripcionVigente(dtu.getNickname())) ){%>
                         <a class="glyphicon glyphicon-download-alt" href="/EspotifyMovil/ServletGeneral?descargar=<%= dtt.getArchivo()%>&tema=<%= dtt.getNombre() %>&album=<%= dtt.getNomalbum() %>&artista=<%= dtt.getNomartista() %>"></a>

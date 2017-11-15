@@ -35,22 +35,22 @@
                 @media (min-width: 992px) {
             #datoslista {
                 width:100%;
-                margin-left: 300px;
+                /*margin-left: 300px;*/
             }
         }
     </style>
     <body>
         <div id ="datoslista">
-            <h4 style="color: white; text-shadow: 0px 1px 4px white;"><%=dtpd.getNombre()%></h4>
+            <h3 style="color: white; text-shadow: 0px 1px 4px white;"><%=dtpd.getNombre()%></h3>
             <% if(dtpd.getRutaImagen() == null){ %>
             <img src="../Imagenes/IconoLista.png" alt="foto del usuario" class="img-responsive img-rounded" title="Album" style="margin: auto; display: block; width: 60%;"><!--Cambiar por imagen del album-->
             <%}else{%>
             <img src="/EspotifyMovil/ServletGeneral?tipo=imagen&ruta=<%= dtpd.getRutaImagen() %>" alt="foto del usuario" class="img-responsive img-rounded" title="Artista" style="margin: auto; display: block; width: 60%;">
             <%}%>
-            <h4 style="color: white"><a onclick="listaalbumesg('<%=dtpd.getGenero()%>')"><%=dtpd.getGenero()%></a></h4>
+            <h4 style="color: white">Género: </h4><a class="btn btn-success" style="background-color: #1ED760" onclick="listaalbumesg('<%=dtpd.getGenero()%>')"><b><%=dtpd.getGenero()%></b></a>
         </div>
-        <div class="container">
-        <h4 style="color: white">Temas</h4>           
+        <div class="container"><br>
+        <!--<h4 style="color: white">Temas</h4>-->           
         <div id="mitabla">
             <div class=""  style="border-style: none">
             <table class="table table-hover">
@@ -85,7 +85,7 @@
                 </td>
                 <%}%>
                   <td><%=dtt.getDuracion()%></td>
-                  <td>
+                  <td class="text-right">
                     <a class="glyphicon glyphicon-info-sign"  data-popover-content="#<%= indice %>" data-toggle="popover" data-trigger="focus"  tabindex="0"></a>
                     <%if (dtt.getArchivo()!=null && (wscli.suscripcionVigente(dtu.getNickname())) ){%>
                         <a class="glyphicon glyphicon-download-alt" href="/EspotifyMovil/ServletGeneral?descargar=<%= dtt.getArchivo()%>&tema=<%= dtt.getNombre() %>&album=<%= dtt.getNomalbum() %>&artista=<%= dtt.getNomartista() %>"></a>

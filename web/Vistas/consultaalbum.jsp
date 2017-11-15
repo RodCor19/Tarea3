@@ -47,7 +47,7 @@
     </head>
     <body>
         <div class="container-fluid" id="datosalbum">
-        <h4 onclick="listaralbumes('<%=dt.getNickname()%>');clickear(this);" style="color: white; text-shadow: 0px 1px 4px white;"><%=dt.getNombre()+" "+dt.getApellido()%></h4>
+        <h3 onclick="listaralbumes('<%=dt.getNickname()%>');clickear(this);" style="color: white; text-shadow: 0px 1px 4px white;cursor: pointer"><%=dt.getNombre()+" "+dt.getApellido()%></h3>
         <% if(dta.getRutaImagen() == null){ %>
         <img src="../Imagenes/iconoMusica.jpg" alt="foto del usuario" class="img-responsive img-rounded" title="Album" style="margin: auto; display: block; width: 60%;"><!--Cambiar por imagen del album-->
         <%}else{%>
@@ -58,11 +58,12 @@
         <h4 style="color: white">Géneros:</h4>
         <p style="color:white" >
         <%for (String gen: generos){%>
-        <a class="btn btn-success" style="background-color: #1ED760" onclick="listaalbumesg('<%=gen%>')" ><b><%=gen%></b></a> 
+        <a class="btn btn-success" style="background-color: #1ED760; margin-top: 5px;" onclick="listaalbumesg('<%=gen%>')" ><b><%=gen%></b></a> 
         <%}%> </p>
         </div>
             <div class="container">
-            <h4 style="color: white">Temas</h4>           
+            <!--<h4 style="color: white">Temas</h4>-->    
+            <br>
             <div id="mitabla">
             <div style="border-style: none">
             <table class="table table-hover">

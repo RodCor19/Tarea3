@@ -41,7 +41,7 @@
                             <label> <%=sesion.getAttribute("error")%></label><br>
                             <%}%>
                              <br class="x"><input type="checkbox" value="Recordarme" id="recordar" name="recordarme"> Recordarme
-                            <br class="x"><center><input type="submit" value="Iniciar sesión" id="boton" /></center>
+                             <br class="x"><center><input class="boton" style="font-size:12px" type="submit" value="Iniciar sesión" id="boton" /></center>
                             </form>
                         </ul>
                         <br>
