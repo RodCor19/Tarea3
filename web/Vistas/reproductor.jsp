@@ -17,16 +17,16 @@
 %>
 
     <div id="contenedorReproductor" class="text-right">
-        <button onclick="cerrarRep(this.parentElement)" class="btn btn-xs btn-danger glyphicon glyphicon-remove"></button>
+        <button onclick="cerrarRep(this.parentElement)" class="btn btn-xs btn-danger glyphicon glyphicon-remove" style=" display: none;"></button>
         <div id="audiocontrol">
-            <div id="trackImageContainer">
+            <div id="trackImageContainer" style=" display: none;">
                 <img id="trackImage" src= "/EspotifyMovil/Imagenes/albumReproductor.jpg">
             </div>
             <div id="nowPlay" class="text-center" >
-                <div id="auTitle" style="padding-bottom: 5px; background: #1ED760; color: whitesmoke">---</div>
+                <div id="auTitle" style="padding-bottom: 5px; background: #1ED760; color: whitesmoke; display: none">---</div>
                 <audio id="aurepr" preload="auto" controls controlsList="nodownload" onended="get_next(1)"></audio>
             </div>            
-            <div id="auExtraControls" style="background: red">
+            <div id="auExtraControls" style="background: red; display: none;">
                 <div  class="col-sm-6 text-center" style="padding: 0px;">
                     <button id="btnPrev" class="ctrlbtn" onclick="get_next(-1);">
                         <i class="glyphicon glyphicon-step-backward" aria-hidden="true"></i>
@@ -40,7 +40,7 @@
             </div>
         </div>
         <button class="btnVerTemas" data-toggle="collapse" data-target="#mostrarTemas" onclick="mostrarOcultarTemas(this)">Ver temas</button>
-        <div id="mostrarTemas" class="collapse">
+        <div id="mostrarTemas" class="collapse" style=" display: none;">
             <table id="music" width="100%">  
                 <thead>
                     <tr>
